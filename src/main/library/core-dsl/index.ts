@@ -1,4 +1,4 @@
-import { Attribute, Concept, foodjs, Relation } from "@food-js/core";
+import { Attribute, foodjs, Relation } from "@food-js/core";
 import {
   grams,
   hours,
@@ -27,7 +27,7 @@ declare global {
 }
 
 export const coreDslUnit = foodjs.unit('@food-js/core-dsl');
-const { attribute, plugin, value } = coreDslUnit.functions;
+const {attribute, plugin, value} = coreDslUnit.functions;
 
 export const numberUnitOfMeasurements = plugin('number-unit-of-measurements', {
   globalExtensions: [
@@ -75,7 +75,11 @@ export const numberUnitOfMeasurements = plugin('number-unit-of-measurements', {
 });
 
 export interface DefUtils {
-  requires, a, some, taking, sequence
+  requires,
+  a,
+  some,
+  taking,
+  sequence
 }
 
 export const define = (productionCode: string, productionFn: (defUtils: DefUtils) => Relation) => {

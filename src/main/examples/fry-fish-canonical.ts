@@ -1,13 +1,9 @@
-import { inside } from "@food-js/library/commons";
-
+import { inside, simpleToString } from "@food-js/library/commons";
 // very basic decomposition to show complexity in canonical description
 import { fish, friedFish, fry, oil, oily, pan, pepper, salt, seasoned } from "@food-js/library/food";
 import { foodjs } from "@food-js/core";
 
-/*
-import { pluginSimpleStringRepresentations } from "@food-js/library/commons";
-pluginSimpleStringRepresentations.load();
-*/
+simpleToString.load();
 
 const fryFishExample = foodjs.unit('fry-fish-example');
 const { production, group } = fryFishExample.functions;
@@ -35,6 +31,4 @@ const fryFish = production('fryFish')
       fry.withInput(group().withItems(fish)).withOutput(group().withItems(friedFish))
     );
 
-console.log(fryFish.toString());
-
-export default fryFish;
+export { fryFish as production };

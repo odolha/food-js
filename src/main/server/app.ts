@@ -16,8 +16,8 @@ class App {
       })
     });
     router.get('/example/:name', (req, res) => {
-      const production = require(`@food-js/examples/${req.params.name}`);
-      res.send(production.toString());
+      const { production } = require(`@food-js/examples/${req.params.name}`);
+      res.send(`<pre>${production.toString()}</pre>`);
     });
     this.express.use('/', router)
   }

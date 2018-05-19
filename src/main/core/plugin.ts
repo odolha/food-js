@@ -1,7 +1,7 @@
 import { logger } from "@food-js/utils/logger";
 
 export type PluginDefinition = {
-  globalExtensions: { type: any, method: string, implementation: (self: any, selfSuperType: any) => any }[];
+  globalExtensions: { type: any, method: string, implementation: (self: any) => any }[];
 }
 
 export class Plugin {
@@ -13,13 +13,7 @@ export class Plugin {
       logger.debug(`Applying global extension: ${ext.type}.${ext.method}`);
       ext['_original'] = ext.type.prototype[ext.method];
       ext.type.prototype[ext.method] = function() {
-        const selfSuperType = Object.getPrototypeOf(this);
-        // console.log('---')
-        // console.log(this);
-        // console.log(selfSuperType);
-        // console.log(selfSuperType.toSimpleString);
-        // console.log('---')
-        return ext.implementation(this, selfSuperType);
+        return ext.implementation(this);
       };
     });
   }

@@ -1,6 +1,6 @@
 import { Collectible } from "./collectible";
 import { Attribute } from "./attribute";
-import { $anonymous } from "./symbols";
+import { $anonymous, $concept } from "./symbols";
 
 export interface IConcept { }
 
@@ -17,7 +17,7 @@ export abstract class Concept implements Collectible<Concept>, IConcept {
     return [ this ];
   }
 
-  public readonly conceptType: string | symbol;
+  public readonly conceptType: string | symbol = $concept;
 
   abstract clone(): this;
 

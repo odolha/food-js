@@ -19,11 +19,3 @@ app.listen(port, (err) => {
 
   return console.log(`FoodJS REST server is listening on ${port}`)
 });
-
-import { numberUnitOfMeasurements } from "@food-js/library/core-dsl";
-numberUnitOfMeasurements.load();
-
-import { simpleToString } from "@food-js/library/commons";
-simpleToString.load();
-
-console.log(1.0.grams().toString());

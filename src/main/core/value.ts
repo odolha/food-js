@@ -1,9 +1,9 @@
 import { Concept } from "./concept";
 import { Qualifier } from "./qualifier";
-import { $nothing, $quantity } from "./symbols";
+import { $nothing, $value } from "./symbols";
 
 export class Value<T extends Concept> extends Qualifier<T> {
-  public readonly conceptType = $quantity;
+  public readonly conceptType = $value;
 
   public value: number | string | symbol = $nothing;
 

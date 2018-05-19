@@ -58,7 +58,7 @@ export class FoodJs {
         return self.addConcept(new Relation(code));
       },
       production(code: string): Relation {
-        return self.addConcept(this.produces.withSynonym(this.relation(code)));
+        return self.addConcept(self.produces.withSynonym(self.functions.relation(code)));
       },
       plugin(name: string, def: PluginDefinition): Plugin {
         return self.addPlugin(new Plugin(name, def));
