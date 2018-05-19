@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "mocha",
+      "node"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "@food-js/server/*": [
+        "main/server/*"
+      ],
+      "@food-js/core/*": [
+        "main/core/*"
+      ],
+      "@food-js/core": [
+        "main/core"
+      ],
+      "@food-js/library/commons/*": [
+        "main/library/commons/*"
+      ],
+      "@food-js/library/commons": [
+        "main/library/commons"
+      ],
+      "@food-js/library/core-dsl/*": [
+        "main/library/core-dsl/*"
+      ],
+      "@food-js/library/core-dsl": [
+        "main/library/core-dsl"
+      ],
+      "@food-js/library/food/*": [
+        "main/library/food/*"
+      ],
+      "@food-js/library/food": [
+        "main/library/food"
+      ],
+      "@food-js/examples/*": [
+        "main/examples/*"
+      ]
+    }
+  }
+}
