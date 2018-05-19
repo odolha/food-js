@@ -1,22 +1,11 @@
 // food-lib
-import { attribute, production, thing } from "@food-js/core";
 import { base, having, heavy } from "@food-js/library/commons";
 import { define } from "@food-js/library/core-dsl";
+import { foodjs } from "@food-js/core";
+import { filleted, fish, friedFish, fry, oil, pan, pepper, salt, stove } from "@food-js/library/food";
 
-const food = thing('food');
-const tool = thing('tool');
-const salt = thing('salt').ofType(food);
-const pepper = thing('pepper').ofType(food);
-const oil = thing('oil').ofType(food);
-const fish = thing('fish').ofType(food);
-const pan = thing('pan').ofType(tool);
-const stove = thing('stove').ofType(tool);
-const fried = attribute('fried');
-const oily = attribute('oily');
-const seasoned = attribute('seasoned');
-const fry = production('fry');
-const filleted = attribute('filleted');
-const friedFish = fish.withAttribute(fried).withSynonym(thing('friedFish'));
+const fryFishExample = foodjs.unit('fry-fish-example');
+const { production, thing, attribute } = fryFishExample.functions;
 
 // using the core-dsl to compose a similar complex structure easier than the canonical representation
 export const fryFish = define('fryFish', ({ requires, a, some, taking, sequence }) => {

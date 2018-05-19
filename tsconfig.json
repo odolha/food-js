@@ -21,6 +21,9 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "@food-js/utils/*": [
+        "main/utils/*"
+      ],
       "@food-js/server/*": [
         "main/server/*"
       ],

@@ -2,12 +2,16 @@ import { Collectible } from "./collectible";
 import { Attribute } from "./attribute";
 import { $anonymous } from "./symbols";
 
-export abstract class Concept implements Collectible<Concept> {
+export interface IConcept { }
+
+export abstract class Concept implements Collectible<Concept>, IConcept {
   public attributes: Attribute[] = [];
   public synonyms: this[] = [];
   public types: this[] = [];
 
-  constructor(public code: string | symbol = $anonymous) { }
+  constructor(public code: string | symbol = $anonymous) {
+    this.attributes = [];
+  }
 
   public get list(): Concept[] {
     return [ this ];
@@ -19,8 +23,7 @@ export abstract class Concept implements Collectible<Concept> {
 
   derivated(changes: { [key: string]: any }): this {
     return Object.assign(this.clone(), this, changes);
-  };
-
+  }
   withAttribute(...attrs: Attribute[]): this {
     return this.derivated({ attributes: [ ...this.attributes, ...attrs ] });
   }

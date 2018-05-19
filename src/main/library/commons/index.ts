@@ -1,4 +1,15 @@
-import { Attribute, attribute, Concept, Group, plugin, Qualifier, Relation, thing, Value, value } from "@food-js/core";
+import {
+  Attribute,
+  Concept,
+  foodjs,
+  Group,
+  Qualifier,
+  Relation,
+  Value,
+} from "@food-js/core";
+
+export const commonsUnit = foodjs.unit('@food-js/commons');
+const { attribute, plugin, thing, value } = commonsUnit.functions;
 
 export const base = thing('base');
 export const weightOf = attribute('weightOf');
@@ -18,44 +29,52 @@ export const seconds = attribute('seconds');
 export const minutes = attribute('minutes');
 export const hours = attribute('hours');
 
-export const pluginSimpleStringRepresentations = plugin('simple-string-representations', [
-  () => Object.assign(Concept.prototype, {
-    toSimpleString(): string {
-      if (this.attributes.length > 0){
-        return `${this.code.toString()}[${this.attributes.map(a => a.toSimpleString()).join(', ')}]`;
-      } else {
-        return `${this.code.toString()}`;
+export const simpleToString = plugin('@food-js/commons/simple-to-string', {
+  globalExtensions: [
+    {
+      type: Concept,
+      method: 'toSimpleString',
+      implementation: (self) => {
+        if (self.attributes.length > 0){
+          return `${self.code.toString()}[${self.attributes.map(a => a.toSimpleString()).join(', ')}]`;
+        } else {
+          return `${self.code.toString()}`;
+        }
       }
     },
-    toString() {
-      const core = this.toSimpleString();
-      const synonyms = this.synonyms.map(s => s.toSimpleString());
-      return `${[core, ...synonyms].join('\nAKA\n')}`;
+    {
+      type: Concept,
+      method: 'toString',
+      implementation: (self) => {
+        const core = self.toSimpleString();
+        const synonyms = self.synonyms.map(s => s.toSimpleString());
+        return `${[core, ...synonyms].join('\nAKA\n')}`;
+      }
+    },
+    {
+      type: Qualifier,
+      method: 'toSimpleString',
+      implementation: (self, selfSuperType) => self.isPlain() ? '' : selfSuperType.toSimpleString.apply(self)
+    },
+    {
+      type: Attribute,
+      method: 'toSimpleString',
+      implementation: (self, selfSuperType) => `@${selfSuperType.toSimpleString.apply(self)}:${self.qualifier.toSimpleString()}`
+    },
+    {
+      type: Value,
+      method: 'toSimpleString',
+      implementation: (self, selfSuperType) => `${selfSuperType.toSimpleString.apply(self)}<${self.value}>`
+    },
+    {
+      type: Group,
+      method: 'toSimpleString',
+      implementation: (self) => `{${self.items.map(item => item.toSimpleString()).join(', ')}}`
+    },
+    {
+      type: Relation,
+      method: 'toSimpleString',
+      implementation: (self, selfSuperType) => `${self.input.toSimpleString()} *${selfSuperType.toSimpleString.apply(self)}* ${self.output.toSimpleString()}`
     }
-  }),
-  () => Object.assign(Qualifier.prototype, {
-    toSimpleString() {
-      return this.isPlain() ? '' : `${Object.getPrototypeOf(this).toSimpleString.bind(this)()}`;
-    }
-  }),
-  () => Object.assign(Attribute.prototype, {
-    toSimpleString() {
-      return `@${Object.getPrototypeOf(this).toSimpleString.bind(this)()}:${this.qualifier.toSimpleString()}`;
-    }
-  }),
-  () => Object.assign(Value.prototype, {
-    toSimpleString() {
-      return `${Object.getPrototypeOf(this).toSimpleString.bind(this)()}<${this.value}>`;
-    }
-  }),
-  () => Object.assign(Group.prototype, {
-    toSimpleString() {
-      return `{${this.items.map(item => item.toSimpleString()).join(', ')}}`;
-    }
-  }),
-  () => Object.assign(Relation.prototype, {
-    toSimpleString() {
-      return `${this.input.toSimpleString()} *${Object.getPrototypeOf(this).toSimpleString.bind(this)()}* ${this.output.toSimpleString()}`;
-    }
-  })
-]);
+  ]
+});

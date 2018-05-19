@@ -1,4 +1,7 @@
-import { production, attribute, thing } from "@food-js/core";
+import { foodjs } from "@food-js/core";
+
+const fryFishExample = foodjs.unit('@food-js/food');
+const { production, thing, attribute } = fryFishExample.functions;
 
 export const food = thing('food');
 export const tool = thing('tool');

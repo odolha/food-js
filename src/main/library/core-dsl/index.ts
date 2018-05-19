@@ -1,4 +1,4 @@
-import { Attribute, Concept, plugin, Relation, value } from "@food-js/core";
+import { Attribute, Concept, foodjs, Relation } from "@food-js/core";
 import {
   grams,
   hours,
@@ -16,9 +16,9 @@ import {
 declare global {
   interface Number {
     grams: () => Attribute;
-    kg: () => Attribute;
+    kgs: () => Attribute;
     liters: () => Attribute;
-    ml: () => Attribute;
+    mls: () => Attribute;
     items: () => Attribute;
     seconds: () => Attribute;
     minutes: () => Attribute;
@@ -26,16 +26,53 @@ declare global {
   }
 }
 
-export const coreDsl = plugin('@food-js/core-dsl', [() => {
-  Number.prototype.grams = function() { return weightOf.withQualifier(grams.withQualifier(value().withValue(this))); };
-  Number.prototype.kg = function() { return weightOf.withQualifier(kgs.withQualifier(value().withValue(this))); };
-  Number.prototype.liters = function() { return volumeOf.withQualifier(liters.withQualifier(value().withValue(this))); };
-  Number.prototype.ml = function() { return volumeOf.withQualifier(mls.withQualifier(value().withValue(this))); };
-  Number.prototype.items = function() { return numberOf.withQualifier(value().withValue(this)); };
-  Number.prototype.seconds = function() { return timeOf.withQualifier(seconds.withQualifier(value().withValue(this))); };
-  Number.prototype.minutes = function() { return timeOf.withQualifier(minutes.withQualifier(value().withValue(this))); };
-  Number.prototype.hours = function() { return timeOf.withQualifier(hours.withQualifier(value().withValue(this))); };
-}]);
+export const coreDslUnit = foodjs.unit('@food-js/core-dsl');
+const { attribute, plugin, value } = coreDslUnit.functions;
+
+export const numberUnitOfMeasurements = plugin('number-unit-of-measurements', {
+  globalExtensions: [
+    {
+      type: Number,
+      method: 'grams',
+      implementation: (self) => weightOf.withQualifier(grams.withQualifier(value().withValue(self)))
+    },
+    {
+      type: Number,
+      method: 'kgs',
+      implementation: (self) => weightOf.withQualifier(kgs.withQualifier(value().withValue(self)))
+    },
+    {
+      type: Number,
+      method: 'liters',
+      implementation: (self) => volumeOf.withQualifier(liters.withQualifier(value().withValue(self)))
+    },
+    {
+      type: Number,
+      method: 'mls',
+      implementation: (self) => volumeOf.withQualifier(mls.withQualifier(value().withValue(self)))
+    },
+    {
+      type: Number,
+      method: 'items',
+      implementation: (self) => numberOf.withQualifier(value().withValue(self))
+    },
+    {
+      type: Number,
+      method: 'seconds',
+      implementation: (self) => timeOf.withQualifier(seconds.withQualifier(value().withValue(self)))
+    },
+    {
+      type: Number,
+      method: 'minutes',
+      implementation: (self) => timeOf.withQualifier(minutes.withQualifier(value().withValue(self)))
+    },
+    {
+      type: Number,
+      method: 'hours',
+      implementation: (self) => timeOf.withQualifier(hours.withQualifier(value().withValue(self)))
+    },
+  ]
+});
 
 export interface DefUtils {
   requires, a, some, taking, sequence
