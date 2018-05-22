@@ -2,9 +2,7 @@ import { Collectible } from "./collectible";
 import { Attribute } from "./attribute";
 import { $anonymous, $concept } from "./symbols";
 
-export interface IConcept { }
-
-export abstract class Concept implements Collectible<Concept>, IConcept {
+export abstract class Concept implements Collectible<Concept> {
   public attributes: Attribute[] = [];
   public synonyms: this[] = [];
   public types: this[] = [];
@@ -32,5 +30,10 @@ export abstract class Concept implements Collectible<Concept>, IConcept {
   }
   ofType(...types: this[]): this {
     return this.derivated({ types: [ ...this.types, ...types ] });
+  }
+
+  // slot method for DSL
+  toSimpleString(): string {
+    throw new Error('Not implemented');
   }
 }

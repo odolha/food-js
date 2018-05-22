@@ -36,20 +36,11 @@
       "@food-js/library/commons/*": [
         "main/library/commons/*"
       ],
-      "@food-js/library/commons": [
-        "main/library/commons"
-      ],
       "@food-js/library/core-dsl/*": [
         "main/library/core-dsl/*"
       ],
-      "@food-js/library/core-dsl": [
-        "main/library/core-dsl"
-      ],
       "@food-js/library/food/*": [
         "main/library/food/*"
-      ],
-      "@food-js/library/food": [
-        "main/library/food"
       ],
       "@food-js/examples/*": [
         "main/examples/*"
