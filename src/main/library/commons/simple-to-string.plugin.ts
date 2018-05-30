@@ -1,11 +1,9 @@
-import { $attribute, $concept, $group, $relation, $value } from "@food-js/core/symbols";
+import { $attribute, $concept, $group, $relation, $thing, $value } from "@food-js/core/symbols";
 import { foodjs } from "@food-js/core/foodjs";
-import { Relation, Concept, Attribute, Group, Value } from "@food-js/core";
+import { Relation, Concept, Attribute, Group, Value, Thing } from "@food-js/core";
 
 export const commonsUnit = foodjs.unit('@food-js/commons');
-const { plugin } = commonsUnit.functions;
-
-// TODO: investigate alternatives to better integrate multi-type polymorphic plugged-in methods
+const { plugin } = commonsUnit.make;
 
 const stringifyRelationItem = (concept: Concept) => {
   if (concept.conceptType === $relation) {
@@ -24,6 +22,13 @@ const stringify = (concept: Concept, asType: string | symbol = concept.conceptTy
     } else {
       return `@${stringify(attribute, $concept)}:${stringify(qualifier)}`;
     }
+  } else if (asType === $thing) {
+    const thing = concept as Thing;
+    if (thing.isNothing()) {
+      return 'Ø';
+    } else {
+      return stringify(thing, $concept);
+    }
   } else if (asType === $value) {
     const value = concept as Value<any>;
     return `<${value.value}>`;
@@ -41,6 +46,12 @@ const stringify = (concept: Concept, asType: string | symbol = concept.conceptTy
     }
   }
 };
+
+declare module '@food-js/core/concept' {
+  interface Concept {
+    toSimpleString(): string;
+  }
+}
 
 export const simpleToString = plugin('simple-to-string', {
   globalExtensions: [

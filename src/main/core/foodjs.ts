@@ -2,18 +2,16 @@ import { Attribute } from "./attribute";
 import { Concept } from "./concept";
 import { Group } from "./group";
 import { Plugin, PluginDefinition } from "./plugin";
-import { Qualifier } from "./qualifier";
 import { Relation } from "./relation";
 import { Thing } from "./thing";
 import { Value } from "./value";
 
 import { keepUnique } from "@food-js/utils/functions";
 
-export interface FoodJSFunctions {
-  qualifier<T extends Concept>(code?: string): Qualifier<T>;
-  value<T extends Concept>(code?: string): Value<T>;
+export interface FoodJSMaker {
   thing(code?: string): Thing;
   attribute(code?: string): Attribute;
+  value<T extends Concept>(code?: string): Value<T>;
   group<T extends Thing>(code?: string): Group<T>;
   relation(code?: string): Relation;
   production(code: string): Relation;
@@ -26,28 +24,26 @@ export class FoodJs {
   private plugins: Plugin[] = [];
   private dependencies: FoodJs[] = [];
 
-  public functions: FoodJSFunctions;
+  // maker interface for registering food-js concepts
+  public make: FoodJSMaker;
 
-  // core relation used to definePlugin productions
-  public produces: Relation;
+  // core relation used to define productions
+  private produces: Relation;
 
   constructor(id: string, ...dependencies: FoodJs[]) {
     this.id = id;
     this.dependencies = dependencies;
 
     const self = this;
-    this.functions = {
-      qualifier<T extends Concept>(code?: string): Qualifier<T> {
-        return self.addConcept(new Qualifier(code));
-      },
-      value<T extends Concept>(code?: string): Value<T> {
-        return self.addConcept(new Value(code));
-      },
+    this.make = {
       thing(code?: string): Thing {
         return self.addConcept(new Thing(code));
       },
       attribute(code?: string): Attribute {
         return self.addConcept(new Attribute(code));
+      },
+      value<T extends Concept>(code?: string): Value<T> {
+        return self.addConcept(new Value(code));
       },
       group<T extends Thing>(code?: string): Group<T> {
         return self.addConcept(new Group(code));
@@ -56,14 +52,14 @@ export class FoodJs {
         return self.addConcept(new Relation(code));
       },
       production(code: string): Relation {
-        return self.addConcept(self.produces.withSynonym(self.functions.relation(code)));
+        return self.addConcept(self.produces.withSynonym(self.make.relation(code)));
       },
       plugin(name: string, def: PluginDefinition): Plugin {
         return self.addPlugin(new Plugin(name, def));
       }
     };
 
-    this.produces = this.functions.relation('produces');
+    this.produces = this.make.relation('produces');
   }
 
   private addConcept<T extends Concept>(concept: T): T {
@@ -77,24 +73,19 @@ export class FoodJs {
     this.plugins.push(plugin);
     return plugin;
   }
-
-  // slot method for DSL
-  define(code: string): any {
-    throw new Error('Not implemented');
-  }
 }
 
-const moduleStore = {};
+const unitsStore = {};
 
 export const foodjs = {
   unit: (id: string, ...dependencies: FoodJs[]): FoodJs => {
-    const existingModule = moduleStore[id];
-    if (existingModule) {
-      existingModule.dependencies = existingModule.dependencies.concat(dependencies).reduce(keepUnique, []);
-      return existingModule;
+    const existingUnit = unitsStore[id];
+    if (existingUnit) {
+      existingUnit.dependencies = existingUnit.dependencies.concat(dependencies).reduce(keepUnique, []);
+      return existingUnit;
     } else {
       const newModule = new FoodJs(id, ...dependencies);
-      moduleStore[id] = newModule;
+      unitsStore[id] = newModule;
       return newModule;
     }
   }

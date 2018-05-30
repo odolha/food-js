@@ -1,7 +1,23 @@
 import { logger } from "@food-js/utils/logger";
 
+export interface GlobalExtensionMethod {
+  type: any;
+  method: string;
+  implementation: (self: any, ...args: any[]) => any
+}
+
+export interface GlobalExtensionAttribute {
+  type: any;
+  attribute: string;
+  value?: any;
+  getter?: (self: any) => any;
+  setter?: (self: any, value: any) => any;
+}
+
+export type GlobalExtension = GlobalExtensionMethod | GlobalExtensionAttribute;
+
 export type PluginDefinition = {
-  globalExtensions: { type: any, method: string, implementation: (self: any) => any }[];
+  globalExtensions: GlobalExtension[];
 }
 
 export class Plugin {
@@ -10,19 +26,51 @@ export class Plugin {
   load() {
     logger.debug(`Loading plugin: ${this.name}`);
     this.def.globalExtensions.forEach(ext => {
-      logger.debug(`Applying global extension: ${ext.type}.${ext.method}`);
-      ext['_original'] = ext.type.prototype[ext.method];
-      ext.type.prototype[ext.method] = function() {
-        return ext.implementation(this);
-      };
+      if (ext['method']) {
+        const extMethod = ext as GlobalExtensionMethod;
+        logger.debug(`Applying global extension for method: ${ext.type}.${extMethod.method}`);
+        extMethod['_original'] = extMethod.type.prototype[extMethod.method];
+        extMethod.type.prototype[extMethod.method] = function(...args) {
+          return extMethod.implementation(this, ...args);
+        };
+      } else if (ext['attribute']) {
+        const extAttr = ext as GlobalExtensionAttribute;
+        logger.debug(`Applying global extension for attribute: ${extAttr.type}.${extAttr.attribute}`);
+        extAttr['_original'] = extAttr.type.prototype[extAttr.attribute];
+        if (extAttr.value !== undefined) {
+          extAttr.type.prototype[extAttr.attribute] = extAttr.value;
+        } else {
+          Object.defineProperty(extAttr.type.prototype, extAttr.attribute, {
+            enumerable: true,
+            configurable: true,
+            get: function(): any {
+              return extAttr.getter(this);
+            },
+            set: function(value: any) {
+              extAttr.setter(this, value)
+            }
+          });
+        }
+      } else {
+        throw new Error(`Cannot apply extension. Unsupported type, expecting either 'method' or 'attribute'.`);
+      }
     });
   }
 
   unload() {
     logger.debug(`Un-loading plugin: ${this.name}`);
     this.def.globalExtensions.forEach(ext => {
-      logger.debug(`Reverting global extension: ${ext.type}.${ext.method}`);
-      ext.type.prototype[ext.method] = ext['_original'];
+      if (ext['method']) {
+        const extMethod = ext as GlobalExtensionMethod;
+        logger.debug(`Reverting global extension for method: ${extMethod.type}.${extMethod.method}`);
+        extMethod.type.prototype[extMethod.method] = extMethod['_original'];
+      } else if (ext['attribute']) {
+        const extAttr = ext as GlobalExtensionAttribute;
+        logger.debug(`Reverting global extension for attribute: ${extAttr.type}.${extAttr.attribute}`);
+        extAttr.type.prototype[extAttr.attribute] = extAttr['_original'];
+      } else {
+        throw new Error(`Cannot unload extension. Unsupported type, expecting either 'method' or 'attribute'.`);
+      }
     });
   }
 }

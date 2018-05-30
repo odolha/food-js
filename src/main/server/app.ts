@@ -1,4 +1,5 @@
 import * as express from 'express'
+import { ProductionExample } from "@food-js/examples/example";
 
 class App {
   public express;
@@ -16,8 +17,10 @@ class App {
       })
     });
     router.get('/example/:name', (req, res) => {
-      const { production } = require(`@food-js/examples/${req.params.name}`);
-      res.send(`<pre>${production.toString()}</pre>`);
+      const { example } : { example: ProductionExample } = require(`@food-js/examples/${req.params.name}`);
+      example.productionSetUp();
+      res.send(`<pre>${example.productionExample.toString()}</pre>`);
+      example.productionTearDown();
     });
     this.express.use('/', router)
   }

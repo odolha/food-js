@@ -1,7 +1,7 @@
 import { foodjs } from "@food-js/core/foodjs";
 
 export const commonsUnit = foodjs.unit('@food-js/commons');
-const { attribute, thing, value } = commonsUnit.functions;
+const { attribute, thing, value } = commonsUnit.make;
 
 export const base = thing('base');
 
@@ -11,6 +11,8 @@ export const numberOf = attribute('numberOf');
 export const timeOf = attribute('timeOf');
 
 export const inside = attribute('inside');
+export const putOn = attribute('putOn');
+export const putIn = attribute('putIn');
 export const having = attribute('having');
 export const being = attribute('being');
 

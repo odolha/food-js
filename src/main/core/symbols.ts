@@ -1,6 +1,6 @@
 export const $anonymous = Symbol('anonymous');
-export const $empty = Symbol('empty');
 export const $nothing = Symbol('nothing');
+export const $nil = Symbol('nil');
 export const $plain = Symbol('plain');
 
 export const $concept = Symbol('concept');

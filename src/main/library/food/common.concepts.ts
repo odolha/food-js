@@ -1,7 +1,7 @@
 import { foodjs } from "@food-js/core/foodjs";
 
 const fryFishExample = foodjs.unit('@food-js/food');
-const { production, thing, attribute } = fryFishExample.functions;
+const { production, thing, attribute } = fryFishExample.make;
 
 export const food = thing('food');
 export const tool = thing('tool');

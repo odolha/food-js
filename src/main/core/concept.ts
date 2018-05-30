@@ -31,9 +31,7 @@ export abstract class Concept implements Collectible<Concept> {
   ofType(...types: this[]): this {
     return this.derivated({ types: [ ...this.types, ...types ] });
   }
-
-  // slot method for DSL
-  toSimpleString(): string {
-    throw new Error('Not implemented');
+  isEmpty() {
+    return this.list.length === 0;
   }
 }
