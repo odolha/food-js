@@ -1,5 +1,7 @@
 import * as express from 'express'
 import { ProductionExample } from "@food-js/examples/example";
+import { Relation } from "@food-js/core";
+import { doNothing } from "@food-js/utils/functions";
 
 class App {
   public express;
@@ -18,9 +20,10 @@ class App {
     });
     router.get('/example/:name', (req, res) => {
       const { example } : { example: ProductionExample } = require(`@food-js/examples/${req.params.name}`);
-      example.productionSetUp();
-      res.send(`<pre>${example.productionExample.toString()}</pre>`);
-      example.productionTearDown();
+      (example.productionSetUp || doNothing)();
+      const exampleResult = example.productionExample instanceof Relation ? example.productionExample : example.productionExample();
+      res.send(`<pre>${exampleResult.toString()}</pre>`);
+      (example.productionTearDown || doNothing)();
     });
     this.express.use('/', router)
   }

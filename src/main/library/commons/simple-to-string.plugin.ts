@@ -31,7 +31,7 @@ const stringify = (concept: Concept, asType: string | symbol = concept.conceptTy
     }
   } else if (asType === $value) {
     const value = concept as Value<any>;
-    return `<${value.value}>`;
+    return `<${value.value.toString()}>`;
   } else if (asType === $group) {
     const group = concept as Group<any>;
     return `{${group.items.map(item => stringify(item)).join(', ')}}`;

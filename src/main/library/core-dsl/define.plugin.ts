@@ -1,104 +1,143 @@
 import { FoodJs, foodjs, FoodJSMaker } from "@food-js/core/foodjs";
-import { Attribute, Relation, Thing } from "@food-js/core";
-import { Qualifier } from "@food-js/core/qualifier";
+import { Attribute, Qualifier, Relation, Thing } from "@food-js/core";
 import { Concept } from "@food-js/core/concept";
+import { summarized } from "@food-js/library/commons/core.concepts";
 
 export const coreDslUnit = foodjs.unit('@food-js/core-dsl');
 const { plugin } = coreDslUnit.make;
 
-type QualifierDef<T extends Concept> = Qualifier<T> | QualifierDefArray<T>;
-interface QualifierDefArray<T extends Concept> extends Array<QualifierDef<T>> { }
+type Subject = Thing | ItemDefinition<Thing>;
+type ItemDefinitionInfo<T extends Concept> = Qualifier<T> | ItemDefinition<T>;
 
-function resolveQualifier<T extends Concept>(def: QualifierDef<T>): Qualifier<T> {
-  if (def instanceof Qualifier) {
-    return def;
-  } else {
-    // XXX not ok, simplify
-    const [subTarget, ...nextQualifiers] = def;
-    if (subTarget instanceof Attribute) {
-      return subTarget.withQualifier(resolveQualifier(nextQualifiers));
-    } else if (subTarget instanceof Concept) {
-      return subTarget.withAttribute(resolveQualifier(nextQualifiers) as Attribute);
-    }
+class ItemDefinition<T extends Concept> {
+  private target: Thing;
+  private enhancements: { attribute: Attribute, additionalInfo: ItemDefinitionInfo<any> }[] = [];
+
+  constructor(target: Thing) {
+    this.target = target;
+  }
+
+  where<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): ItemDefinition<T> {
+    this.enhancements.push({ attribute, additionalInfo });
+    return this;
+  }
+
+  with<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): ItemDefinition<T> {
+    return this.where(attribute, additionalInfo);
+  }
+
+  being<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): ItemDefinition<T> {
+    return this.where(attribute, additionalInfo);
+  }
+
+  resolve(): Thing {
+    return this.enhancements.reduce((res, { attribute, additionalInfo }) => {
+      if (additionalInfo) {
+        if (additionalInfo instanceof Qualifier) {
+          return res.withAttribute(attribute.withQualifier(additionalInfo));
+        } else {
+          return res.withAttribute(attribute.withQualifier(additionalInfo.resolve()));
+        }
+      } else {
+        return res.withAttribute(attribute);
+      }
+    }, this.target);
   }
 }
 
-type Subject = Thing | Capture<Thing>;
-
-class Capture<T extends Concept> {
-  constructor(private target: Thing, private qualifiers: QualifierDef<T>) { }
+abstract class Capture {
+  abstract buildProduction(currentProduction: Relation, pool?: Thing[]): Relation;
 }
 
-abstract class ProductionSpec {
-  abstract buildProduction(bareProduction?: Relation, pool?: Subject[]): Relation;
-}
+type SubjectCaptureInfo<T extends Concept> = Qualifier<T> | SubjectCapture;
 
-class SubjectProductionSpec extends ProductionSpec {
+class SubjectCapture extends Capture {
   private application: Relation;
   private result: Thing;
-  private adjustment: Attribute;
+  private adjustments: { attribute: Attribute, additionalInfo: SubjectCaptureInfo<any> }[] = [];
 
   constructor(private subject: Subject) {
     super();
   }
 
-  adjust<T extends Concept>(attribute: Attribute, qualifiers: QualifierDef<T>): SubjectProductionSpec {
-    this.adjustment = attribute.withQualifier(resolveQualifier(qualifiers));
+  adjust<T extends Concept>(attribute: Attribute, additionalInfo: SubjectCaptureInfo<T>): SubjectCapture {
+    this.adjustments.push({ attribute, additionalInfo });
     return this;
   }
 
-  apply(application: Relation): SubjectProductionSpec {
+  apply(application: Relation): SubjectCapture {
     this.application = application;
     return this;
   }
 
-  yields(result: Thing): SubjectProductionSpec {
+  yields(result: Thing): SubjectCapture {
     this.result = result;
     return this;
   }
 
-  buildProduction(bareProduction?: Relation, pool?: Subject[]): Relation {
+  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
     // XXX
-    return bareProduction;
+    return currentProduction;
   }
 }
 
-class AttributeProductionSpec extends ProductionSpec {
-  constructor(private attribute: Attribute) {
+class ActionCapture extends Capture {
+  private action: Relation;
+  private attribute: Attribute;
+
+  constructor(action: Relation) {
+    super();
+    this.action = action;
+  }
+
+  for(attribute: Attribute): ActionCapture {
+    this.attribute = attribute;
+    return this;
+  }
+
+  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
+    // XXX
+    return currentProduction;
+  }
+}
+
+class SequenceCapture extends Capture {
+  constructor(private specs: Capture[]) {
     super();
   }
 
-  buildProduction(bareProduction?: Relation, pool?: Subject[]): Relation {
+  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
     // XXX
-    return bareProduction;
+    return currentProduction;
   }
 }
 
-class SeqProductionSpec extends ProductionSpec {
-  constructor(private specs: ProductionSpec[]) {
+class ConcomitantCapture extends Capture {
+  constructor(private specs: Capture[]) {
     super();
   }
 
-  buildProduction(bareProduction?: Relation, pool?: Subject[]): Relation {
+  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
     // XXX
-    return bareProduction;
+    return currentProduction;
   }
 }
 
-class ParProductionSpec extends ProductionSpec {
-  constructor(private specs: ProductionSpec[]) {
-    super();
-  }
-
-  buildProduction(bareProduction?: Relation, pool?: Subject[]): Relation {
-    // XXX
-    return bareProduction;
-  }
+interface DefContextUtils {
+  requires(requirements: Subject[]): void;
+  some<T extends Concept>(target: Thing): ItemDefinition<T>;
+  a<T extends Concept>(target: Thing): ItemDefinition<T>;
+  summary(capture: Capture): void;
+  taking(subject: Subject): SubjectCapture;
+  the(subject: Subject): SubjectCapture;
+  sequence(...specs: Capture[]): SequenceCapture;
+  concomitant(...specs: Capture[]): ConcomitantCapture;
+  perform(action: Relation): ActionCapture;
 }
 
-export class DefContext {
-  private requirements: Subject[];
-  private summarySpec: ProductionSpec;
+export class DefContext implements DefContextUtils{
+  private requirements: Subject[] = [];
+  private summarySpec: Capture;
 
   constructor(private make: FoodJSMaker) { }
 
@@ -106,36 +145,70 @@ export class DefContext {
     this.requirements = [ ...this.requirements, ...requirements ];
   }
 
-  some<T extends Concept>(target: Thing, qualifiers: QualifierDef<T>): Capture<T> {
-    return new Capture<T>(target, qualifiers);
+  some<T extends Concept>(target: Thing): ItemDefinition<T> {
+    return new ItemDefinition<T>(target);
   }
 
-  summary(spec: ProductionSpec): void {
-    this.summarySpec = spec;
+  a<T extends Concept>(target: Thing): ItemDefinition<T> {
+    return this.some(target);
   }
 
-  taking(subject: Subject): SubjectProductionSpec {
-    return new SubjectProductionSpec(subject);
+  summary(capture: Capture): void {
+    this.summarySpec = capture;
   }
 
-  sequence(...specs: ProductionSpec[]): SeqProductionSpec{
-    return new SeqProductionSpec(specs);
+  taking(subject: Subject): SubjectCapture {
+    return new SubjectCapture(subject);
   }
 
-  parallel(...specs: ProductionSpec[]): ParProductionSpec {
-    return new ParProductionSpec(specs);
+  the(subject: Subject): SubjectCapture {
+    return this.taking(subject);
   }
 
-  wait(time: Attribute): AttributeProductionSpec {
-    return new AttributeProductionSpec(time);
+  sequence(...specs: Capture[]): SequenceCapture{
+    return new SequenceCapture(specs);
   }
 
-  buildUpon(bareProduction: Relation, spec: ProductionSpec): Relation {
-    return spec.buildProduction(bareProduction, this.requirements).withSynonym(this.summarySpec.buildProduction());
+  concomitant(...specs: Capture[]): ConcomitantCapture {
+    return new ConcomitantCapture(specs);
+  }
+
+  perform(action: Relation): ActionCapture {
+    return new ActionCapture(action);
+  }
+
+  resolveRequirements(): Thing[] {
+    return this.requirements.map(req => {
+      if (req instanceof Thing) {
+        return req;
+      } else {
+        return req.resolve();
+      }
+    });
+  }
+
+  buildUpon(rootProduction: Relation, rootCapture: Capture, summaryProduction: Relation): Relation {
+    const resolvedRequirements = this.resolveRequirements();
+    return rootCapture.buildProduction(rootProduction, resolvedRequirements)
+      .withSynonym(this.summarySpec.buildProduction(summaryProduction));
   }
 }
 
-type DefBuilderFunction = (utils: DefContext) => ProductionSpec;
+function makeContextUtils(context: DefContext): DefContextUtils {
+  return {
+    requires: context.requires.bind(context),
+    some: context.some.bind(context),
+    a: context.a.bind(context),
+    summary: context.summary.bind(context),
+    taking: context.taking.bind(context),
+    the: context.the.bind(context),
+    sequence: context.sequence.bind(context),
+    concomitant: context.concomitant.bind(context),
+    perform: context.perform.bind(context)
+  };
+}
+
+type DefBuilderFunction = (utils: DefContextUtils) => Capture;
 
 class DefBuilder {
   make: FoodJSMaker;
@@ -147,9 +220,10 @@ class DefBuilder {
   }
 
   build(): Relation {
-    const bareProduction = this.make.production(this.code); // starting point
-    const spec = this.fn(this.context); // defines how the production will build
-    return this.context.buildUpon(bareProduction, spec);
+    const summaryProduction = this.make.production(this.code).withAttribute(summarized);
+    const rootProduction = this.make.production(this.code); // starting point
+    const rootCapture = this.fn(makeContextUtils(this.context)); // defines how the production will build
+    return this.context.buildUpon(rootProduction, rootCapture, summaryProduction);
   }
 }
 

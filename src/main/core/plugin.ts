@@ -1,4 +1,5 @@
 import { logger } from "@food-js/utils/logger";
+import { doNothing } from "@food-js/utils/functions";
 
 export interface GlobalExtensionMethod {
   type: any;
@@ -44,10 +45,10 @@ export class Plugin {
             enumerable: true,
             configurable: true,
             get: function(): any {
-              return extAttr.getter(this);
+              return extAttr.getter ? extAttr.getter(this) : undefined;
             },
             set: function(value: any) {
-              extAttr.setter(this, value)
+              extAttr.setter ? extAttr.setter(this, value) : doNothing();
             }
           });
         }

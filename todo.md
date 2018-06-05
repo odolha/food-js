@@ -34,3 +34,4 @@ Long-term backlog
 -----------------
 - I18N plugin
 - Serialization & de-serialization of concepts (also consider flexible set-ups with different libs available)
+- Hierarchical units, versioned units and experiment with the idea of publishing units (e.g. use NPM)
