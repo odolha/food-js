@@ -45,8 +45,16 @@ class ItemDefinition<T extends Concept> {
   }
 }
 
+function resolveSubject(subject: Subject, pool: Thing[] = []): Thing {
+  if (subject instanceof Thing) {
+    return subject;
+  } else {
+    return subject.resolve();
+  }
+}
+
 abstract class Capture {
-  abstract buildProduction(currentProduction: Relation, pool?: Thing[]): Relation;
+  abstract resolveUpon(currentRelation: Relation, pool?: Thing[]): Relation;
 }
 
 type SubjectCaptureInfo<T extends Concept> = Qualifier<T> | SubjectCapture;
@@ -75,9 +83,26 @@ class SubjectCapture extends Capture {
     return this;
   }
 
-  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
-    // XXX
-    return currentProduction;
+  private resolveItem(from?: Thing, pool?: Thing[]) {
+    const initial = from || resolveSubject(this.subject, pool);
+    return this.adjustments.reduce((res, { attribute, additionalInfo }) => {
+      if (additionalInfo) {
+        if (additionalInfo instanceof Qualifier) {
+          return res.withAttribute(attribute.withQualifier(additionalInfo));
+        } else {
+          return res.withAttribute(attribute.withQualifier(additionalInfo.resolveItem(null, pool)));
+        }
+      } else {
+        return res.withAttribute(attribute);
+      }
+    }, initial);
+  }
+
+  resolveUpon(currentRelation: Relation, pool?: Thing[]): Relation {
+    const initial = resolveSubject(this.subject, pool);
+    const adjusted = this.resolveItem(initial, pool);
+    const result = this.application ? this.application.withInput(initial).withOutput(adjusted) : adjusted;
+    return currentRelation.withInput(initial).withOutput(result);
   }
 }
 
@@ -95,9 +120,9 @@ class ActionCapture extends Capture {
     return this;
   }
 
-  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
+  resolveUpon(currentRelation: Relation, pool?: Subject[]): Relation {
     // XXX
-    return currentProduction;
+    return currentRelation;
   }
 }
 
@@ -106,20 +131,8 @@ class SequenceCapture extends Capture {
     super();
   }
 
-  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
-    // XXX
-    return currentProduction;
-  }
-}
-
-class ConcomitantCapture extends Capture {
-  constructor(private specs: Capture[]) {
-    super();
-  }
-
-  buildProduction(currentProduction: Relation, pool?: Subject[]): Relation {
-    // XXX
-    return currentProduction;
+  resolveUpon(currentRelation: Relation, pool?: Thing[]): Relation {
+    return this.specs.reduce((res, spec) => spec.resolveUpon(res, pool), currentRelation)
   }
 }
 
@@ -131,13 +144,12 @@ interface DefContextUtils {
   taking(subject: Subject): SubjectCapture;
   the(subject: Subject): SubjectCapture;
   sequence(...specs: Capture[]): SequenceCapture;
-  concomitant(...specs: Capture[]): ConcomitantCapture;
   perform(action: Relation): ActionCapture;
 }
 
 export class DefContext implements DefContextUtils{
   private requirements: Subject[] = [];
-  private summarySpec: Capture;
+  private summaryCapture: Capture;
 
   constructor(private make: FoodJSMaker) { }
 
@@ -154,7 +166,7 @@ export class DefContext implements DefContextUtils{
   }
 
   summary(capture: Capture): void {
-    this.summarySpec = capture;
+    this.summaryCapture = capture;
   }
 
   taking(subject: Subject): SubjectCapture {
@@ -169,28 +181,18 @@ export class DefContext implements DefContextUtils{
     return new SequenceCapture(specs);
   }
 
-  concomitant(...specs: Capture[]): ConcomitantCapture {
-    return new ConcomitantCapture(specs);
-  }
-
   perform(action: Relation): ActionCapture {
     return new ActionCapture(action);
   }
 
   resolveRequirements(): Thing[] {
-    return this.requirements.map(req => {
-      if (req instanceof Thing) {
-        return req;
-      } else {
-        return req.resolve();
-      }
-    });
+    return this.requirements.map(req => resolveSubject(req));
   }
 
   buildUpon(rootProduction: Relation, rootCapture: Capture, summaryProduction: Relation): Relation {
     const resolvedRequirements = this.resolveRequirements();
-    return rootCapture.buildProduction(rootProduction, resolvedRequirements)
-      .withSynonym(this.summarySpec.buildProduction(summaryProduction));
+    return rootCapture.resolveUpon(rootProduction, resolvedRequirements)
+      .withSynonym(this.summaryCapture.resolveUpon(summaryProduction));
   }
 }
 
@@ -203,7 +205,6 @@ function makeContextUtils(context: DefContext): DefContextUtils {
     taking: context.taking.bind(context),
     the: context.the.bind(context),
     sequence: context.sequence.bind(context),
-    concomitant: context.concomitant.bind(context),
     perform: context.perform.bind(context)
   };
 }
