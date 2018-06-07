@@ -15,7 +15,6 @@ export const heated = attribute('heated');
 export const fried = attribute('fried');
 export const oily = attribute('oily');
 export const seasoned = attribute('seasoned');
-export const wait = production('wait');
 export const heat = production('heat');
 export const fry = production('fry');
 export const filleted = attribute('filleted');

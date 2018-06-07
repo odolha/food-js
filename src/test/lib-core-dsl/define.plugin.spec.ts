@@ -6,7 +6,7 @@ import { fish, friedFish, fry } from "@food-js/lib-food/common.concepts";
 import { foodjs } from "@food-js/core/foodjs";
 import * as assert from "assert";
 
-describe.only('Plugin: define', () => {
+describe('Plugin: define', () => {
   beforeEach(() => {
     simpleToString.load();
     numberUnitOfMeasurements.load();

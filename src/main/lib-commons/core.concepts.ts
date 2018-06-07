@@ -1,7 +1,7 @@
 import { foodjs } from "@food-js/core/foodjs";
 
 export const commonsUnit = foodjs.unit('@lib-food-js/lib-commons');
-const { attribute, thing, value } = commonsUnit.make;
+const { attribute, thing, value, production } = commonsUnit.make;
 
 export const tagged = attribute('tagged');
 export const summarized = attribute('summarized');
@@ -30,3 +30,5 @@ export const mls = attribute('mls');
 export const seconds = attribute('seconds');
 export const minutes = attribute('minutes');
 export const hours = attribute('hours');
+
+export const wait = production('wait');
