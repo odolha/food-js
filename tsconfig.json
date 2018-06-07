@@ -33,14 +33,14 @@
       "@food-js/core": [
         "main/core"
       ],
-      "@food-js/library/commons/*": [
-        "main/library/commons/*"
+      "@food-js/lib-commons/*": [
+        "main/lib-commons/*"
       ],
-      "@food-js/library/core-dsl/*": [
-        "main/library/core-dsl/*"
+      "@food-js/lib-core-dsl/*": [
+        "main/lib-core-dsl/*"
       ],
-      "@food-js/library/food/*": [
-        "main/library/food/*"
+      "@food-js/lib-food/*": [
+        "main/lib-food/*"
       ],
       "@food-js/examples/*": [
         "main/examples/*"

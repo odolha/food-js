@@ -1,8 +1,9 @@
 import { foodjs } from "@food-js/core/foodjs";
 
-export const commonsUnit = foodjs.unit('@food-js/commons');
+export const commonsUnit = foodjs.unit('@lib-food-js/lib-commons');
 const { attribute, thing, value } = commonsUnit.make;
 
+export const tagged = attribute('tagged');
 export const summarized = attribute('summarized');
 
 export const base = thing('base');
@@ -20,7 +21,7 @@ export const having = attribute('having');
 export const being = attribute('being');
 
 export const $heavy = Symbol('heavy');
-export const heavy = value().withValue($heavy);
+export const heavy = value($heavy);
 
 export const grams = attribute('grams');
 export const kgs = attribute('kgs');

@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "build-watch": "tsc --watch",
+    "build": "rimraf dist/main && tsc",
+    "build-watch": "rimraf dist/main && tsc --watch",
     "start-dev": "nodemon dist/main",
-    "test-dev": "tsc && mocha dist/test/**/*.spec.js"
+    "test-dev": "rimraf dist/test && tsc && mocha dist/test/**/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,7 @@
     "eslint-plugin-import": "2.12.0",
     "eslint-plugin-promise": "3.7.0",
     "mocha": "5.1.1",
+    "rimraf": "^2.6.2",
     "supertest": "3.1.0",
     "tsc": "1.20150623.0",
     "tsconfig-paths": "3.3.2",

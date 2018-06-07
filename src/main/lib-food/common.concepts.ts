@@ -1,6 +1,6 @@
 import { foodjs } from "@food-js/core/foodjs";
 
-const fryFishExample = foodjs.unit('@food-js/food');
+const fryFishExample = foodjs.unit('@lib-food-js/lib-food');
 const { production, thing, attribute } = fryFishExample.make;
 
 export const food = thing('food');
@@ -11,6 +11,7 @@ export const oil = thing('oil').ofType(food);
 export const fish = thing('fish').ofType(food);
 export const pan = thing('pan').ofType(tool);
 export const stove = thing('stove').ofType(tool);
+export const heated = attribute('heated');
 export const fried = attribute('fried');
 export const oily = attribute('oily');
 export const seasoned = attribute('seasoned');

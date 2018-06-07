@@ -4,19 +4,23 @@ import { Group } from "./group";
 import { Plugin, PluginDefinition } from "./plugin";
 import { Relation } from "./relation";
 import { Thing } from "./thing";
-import { Value } from "./value";
+import { AcceptedValueType, Value } from "./value";
 
 import { keepUnique } from "@food-js/utils/functions";
 
 export interface FoodJSMaker {
   thing(code?: string): Thing;
   attribute(code?: string): Attribute;
-  value<T extends Concept>(code?: string): Value<T>;
-  group<T extends Thing>(code?: string): Group<T>;
+  value<T extends Concept>(value: AcceptedValueType): Value<T>;
+  group<T extends Thing>(...items: T[]): T;
+  forceGroup<T extends Thing>(...items: T[]): Group<T>;
   relation(code?: string): Relation;
   production(code: string): Relation;
   plugin(name: string, def: PluginDefinition): Plugin;
 }
+
+// indispensable relation used to define productions (i.e. all productions will sub-type this)
+export const produces = new Relation('produces');
 
 export class FoodJs {
   private id: string;
@@ -24,11 +28,8 @@ export class FoodJs {
   private plugins: Plugin[] = [];
   private dependencies: FoodJs[] = [];
 
-  // maker interface for registering food-js concepts
+  // maker interface for registering lib-food-js concepts
   public make: FoodJSMaker;
-
-  // core relation used to define productions
-  private produces: Relation;
 
   constructor(id: string, ...dependencies: FoodJs[]) {
     this.id = id;
@@ -42,24 +43,29 @@ export class FoodJs {
       attribute(code?: string): Attribute {
         return self.addConcept(new Attribute(code));
       },
-      value<T extends Concept>(code?: string): Value<T> {
-        return self.addConcept(new Value(code));
+      value<T extends Concept>(value: AcceptedValueType): Value<T> {
+        return self.addConcept(new Value().withValue(value));
       },
-      group<T extends Thing>(code?: string): Group<T> {
-        return self.addConcept(new Group(code));
+      group<T extends Thing>(...items: T[]): T {
+        if (items.length === 1) {
+          return items[0];
+        } else {
+          return this.forceGroup(...items);
+        }
+      },
+      forceGroup<T extends Thing>(...items: T[]): Group<T> {
+        return self.addConcept(new Group<T>().withItems(...items));
       },
       relation(code?: string): Relation {
         return self.addConcept(new Relation(code));
       },
       production(code: string): Relation {
-        return self.addConcept(self.produces.withSynonym(self.make.relation(code)));
+        return self.addConcept(self.make.relation(code).ofType(produces));
       },
       plugin(name: string, def: PluginDefinition): Plugin {
         return self.addPlugin(new Plugin(name, def));
       }
     };
-
-    this.produces = this.make.relation('produces');
   }
 
   private addConcept<T extends Concept>(concept: T): T {

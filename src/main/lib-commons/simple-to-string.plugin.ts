@@ -2,7 +2,7 @@ import { $attribute, $concept, $group, $relation, $thing, $value } from "@food-j
 import { foodjs } from "@food-js/core/foodjs";
 import { Relation, Concept, Attribute, Group, Value, Thing } from "@food-js/core";
 
-export const commonsUnit = foodjs.unit('@food-js/commons');
+export const commonsUnit = foodjs.unit('@lib-food-js/lib-commons');
 const { plugin } = commonsUnit.make;
 
 const stringifyRelationItem = (concept: Concept) => {
@@ -31,10 +31,10 @@ const stringify = (concept: Concept, asType: string | symbol = concept.conceptTy
     }
   } else if (asType === $value) {
     const value = concept as Value<any>;
-    return `<${value.value.toString()}>`;
+    return `=${value.value.toString()}`;
   } else if (asType === $group) {
     const group = concept as Group<any>;
-    return `{${group.items.map(item => stringify(item)).join(', ')}}`;
+    return `{${group.items.map(item => stringify(item)).join('; ')}}`;
   } else if (asType === $relation) {
     const relation = concept as Relation;
     return `${stringifyRelationItem(relation.input)} *${stringify(relation, $concept)}* ${stringifyRelationItem(relation.output)}`;

@@ -1,20 +1,21 @@
-import { FoodJs, foodjs } from "@food-js/core/foodjs";
+import { foodjs } from "@food-js/core/foodjs";
 import {
   filleted,
   fish,
   friedFish,
   fry,
   heat,
-  oil,
+  heated,
+  oil, oily,
   pan,
   pepper,
   salt,
   stove
-} from "@food-js/library/food/common.concepts";
-import { base, having, heavy, putIn, putOn, typeOf, weightOf } from "@food-js/library/commons/core.concepts";
-import { simpleToString } from "@food-js/library/commons/simple-to-string.plugin";
-import { numberUnitOfMeasurements } from "@food-js/library/core-dsl/number-enhancements.plugin";
-import { define } from "@food-js/library/core-dsl/define.plugin";
+} from "@food-js/lib-food/common.concepts";
+import { base, having, heavy, putIn, putOn, weightOf } from "@food-js/lib-commons/core.concepts";
+import { simpleToString } from "@food-js/lib-commons/simple-to-string.plugin";
+import { numberUnitOfMeasurements } from "@food-js/lib-core-dsl/number-enhancements.plugin";
+import { define } from "@food-js/lib-core-dsl/define.plugin";
 import { ProductionExample } from "@food-js/examples/example";
 
 
@@ -29,31 +30,33 @@ const productionTearDown = () => {
   define.unload();
 };
 
-// using the core-dsl to compose a similar complex structure easier than the canonical representation
+// using the lib-core-dsl to compose a similar complex structure easier than the canonical representation
 const fryFish = () => foodjs
   .unit('fry-fish-example')
   .define('fryFish')
-  .as(({ requires, a, some, summary, taking, the, sequence, perform }) => {
+  .as(({ requires, a, some, summary, taking, the }) => {
     // prerequisites
     requires([ a(pan).where(having, a(base).with(weightOf, heavy)) ]);
-    requires([ some(fish).being(filleted), oil, salt, pepper ]);
+    requires([ some(fish).being(filleted), some(oil), some(salt), some(pepper) ]);
 
     // recipe summary
-    summary(taking(fish).apply(fry).yields(friedFish));
+    summary(taking(the(fish)).perform(fry).toObtain(the(friedFish)));
 
-    // recipe details
-    const prepPan = sequence(
-      taking(pan).adjust(putOn, the(stove)),
-      taking(oil).adjust(putIn, the(pan)),
-      perform(heat).for(5['minutes'])
-    );
+    const prepPan = taking(the(pan))
+      .adjust(putOn, the(stove))
+      .taking(the(oil))
+      .adjust(putIn, the(pan))
+      .perform(heat)
+      .for(5['minutes'])
+      .toObtain(the(pan).being(heated).being(oily));
 
-    const fryFish = sequence(
-      taking(fish).adjust(putIn, pan),
-      perform(fry).for(10['minutes'])
-    );
+    const fryFish = taking(the(fish))
+      .adjust(putIn, pan)
+      .perform(fry)
+      .for(10['minutes'])
+      .toObtain(some(friedFish));
 
-    return sequence(prepPan, fryFish);
+    return prepPan.then(fryFish);
   })
   .build();
 

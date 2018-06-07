@@ -2,6 +2,8 @@ import { Concept } from "./concept";
 import { Qualifier } from "./qualifier";
 import { $nil, $value } from "./symbols";
 
+export type AcceptedValueType = number | string | symbol;
+
 export class Value<T extends Concept> extends Qualifier<T> {
   public readonly conceptType = $value;
 
@@ -10,7 +12,7 @@ export class Value<T extends Concept> extends Qualifier<T> {
   clone(): this {
     return new Value(this.code) as this;
   }
-  withValue(value: number | string | symbol) {
+  withValue(value: AcceptedValueType) {
     return this.derivated({ value });
   }
 }
