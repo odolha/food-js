@@ -14,6 +14,7 @@ export const numberOf = attribute('numberOf');
 export const timeOf = attribute('timeOf');
 export const typeOf = attribute('typeOf');
 
+export const by = attribute('by');
 export const inside = attribute('inside');
 export const putOn = attribute('putOn');
 export const putIn = attribute('putIn');

@@ -1,7 +1,7 @@
 // very basic decomposition to show complexity in canonical description
 import { foodjs } from "@food-js/core/foodjs";
 import { fish, friedFish, fry, oil, oily, pan, pepper, salt, seasoned } from "@food-js/lib-food/common.concepts";
-import { inside, tagged } from "@food-js/lib-commons/core.concepts";
+import { inside, summarized, tagged } from "@food-js/lib-commons/core.concepts";
 import { simpleToString } from "@food-js/lib-commons/simple-to-string.plugin";
 import { ProductionExample } from "@food-js/examples/example";
 
@@ -31,7 +31,7 @@ const fryFish = fry.withAttribute(tagged.withQualifier(value('fryFish')))
       friedFish
     )
     .withSynonym(
-      fry.withInput(group(fish)).withOutput(group(friedFish))
+      fry.withInput(group(fish)).withOutput(group(friedFish)).withAttribute(summarized)
     );
 
 export const example: ProductionExample = { productionExample: fryFish, productionSetUp, productionTearDown };

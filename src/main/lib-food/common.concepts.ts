@@ -16,6 +16,7 @@ export const fried = attribute('fried');
 export const oily = attribute('oily');
 export const seasoned = attribute('seasoned');
 export const heat = production('heat');
+export const season = production('season');
 export const fry = production('fry');
 export const filleted = attribute('filleted');
 export const friedFish = fish.withAttribute(fried).withSynonym(thing('friedFish'));

@@ -9,7 +9,7 @@ import {
   oil, oily,
   pan,
   pepper,
-  salt,
+  salt, season, seasoned,
   stove
 } from "@food-js/lib-food/common.concepts";
 import { base, having, heavy, putIn, putOn, weightOf } from "@food-js/lib-commons/core.concepts";
@@ -50,13 +50,21 @@ const fryFish = () => foodjs
       .for(5['minutes'])
       .toObtain(the(pan).being(heated).being(oily));
 
+    const seasonedFish = taking(the(fish))
+      .perform(season)
+      .by([salt, pepper])
+      .toObtain(the(fish).being(seasoned, [salt, pepper]));
+
+    // TODO: see? adjust is evil, this is not ok - it should always be an action that changes things, so that the next adjustment will not end up on the process itself as an attribute, but more of a result -> put in pan -> ... was put in pan and everything else
+    // still a long way to go for proper DSL - because it should detect previous output and continue the adjustments... or performance
+
     const fryFish = taking(the(fish))
       .adjust(putIn, pan)
       .perform(fry)
       .for(10['minutes'])
       .toObtain(some(friedFish));
 
-    return prepPan.then(fryFish);
+    return prepPan.then(seasonedFish).then(fryFish);
   })
   .build();
 

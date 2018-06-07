@@ -12,7 +12,7 @@ export interface FoodJSMaker {
   thing(code?: string): Thing;
   attribute(code?: string): Attribute;
   value<T extends Concept>(value: AcceptedValueType): Value<T>;
-  group<T extends Thing>(...items: T[]): T;
+  group<T extends Thing>(...items: T[]): Thing;
   forceGroup<T extends Thing>(...items: T[]): Group<T>;
   relation(code?: string): Relation;
   production(code: string): Relation;
@@ -46,11 +46,11 @@ export class FoodJs {
       value<T extends Concept>(value: AcceptedValueType): Value<T> {
         return self.addConcept(new Value().withValue(value));
       },
-      group<T extends Thing>(...items: T[]): T {
+      group<T extends Thing>(...items: T[]): Thing {
         if (items.length === 1) {
           return items[0];
         } else {
-          return this.forceGroup(...items);
+          return self.make.forceGroup(...items);
         }
       },
       forceGroup<T extends Thing>(...items: T[]): Group<T> {

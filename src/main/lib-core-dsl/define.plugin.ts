@@ -1,12 +1,12 @@
 import { FoodJs, foodjs, FoodJSMaker } from "@food-js/core/foodjs";
 import { Attribute, Qualifier, Relation, Thing } from "@food-js/core";
 import { Concept } from "@food-js/core/concept";
-import { summarized, tagged } from "@food-js/lib-commons/core.concepts";
+import { by, summarized, tagged } from "@food-js/lib-commons/core.concepts";
 
 export const coreDslUnit = foodjs.unit('@lib-food-js/lib-core-dsl');
 const { plugin } = coreDslUnit.make;
 
-type ItemDefinitionInfo<T extends Concept> = Qualifier<T> | Subject<T>;
+type ItemDefinitionInfo<T extends Concept> = Qualifier<T> | Subject<T> | Array<Qualifier<T>>;
 
 class Subject<T extends Concept> {
   private target: Thing;
@@ -30,12 +30,14 @@ class Subject<T extends Concept> {
   }
 
   resolve(queue: Thing[] = []): Thing {
-    return this.enhancements.reduce((res, { attribute, additionalInfo }) => {
+    return this.enhancements.reduce((res: Thing, { attribute, additionalInfo }) => {
       if (additionalInfo) {
         if (additionalInfo instanceof Qualifier) {
           return res.withAttribute(attribute.withQualifier(additionalInfo));
-        } else {
+        } else if (additionalInfo instanceof Subject) {
           return res.withAttribute(attribute.withQualifier(additionalInfo.resolve()));
+        } else {
+          return (additionalInfo as any[]).reduce((thing, q) => thing.withAttribute(attribute.withQualifier(q)), res)
         }
       } else {
         return res.withAttribute(attribute);
@@ -46,7 +48,7 @@ class Subject<T extends Concept> {
 
 type CaptureInfo<T extends Concept> = Qualifier<T> | Subject<T>;
 type CaptureTarget = { subject: Subject<Thing>, adjustments: { attribute: Attribute, additionalInfo: CaptureInfo<any> }[] };
-type CaptureApplication = { relation: Relation, attribute?: Attribute };
+type CaptureApplication = { relation: Relation, attributes: Attribute[] };
 
 class Capture {
   private targets: CaptureTarget[] = [];
@@ -73,12 +75,17 @@ class Capture {
   }
 
   perform(relation: Relation): this {
-    this.application = { relation };
+    this.application = { relation, attributes: [] };
     return this;
   }
 
   for(attribute: Attribute): this {
-    this.application.attribute = attribute;
+    this.application.attributes = [ ...this.application.attributes, attribute ];
+    return this;
+  }
+
+  by(qualifiers: Qualifier<any>[]): this {
+    this.application.attributes = [ ...this.application.attributes, ...(qualifiers.map(q => by.withQualifier(q))) ];
     return this;
   }
 
@@ -88,11 +95,16 @@ class Capture {
   }
 
   then(next: Capture): this {
-    this.next = next;
+    // allow flat usage of then to create link
+    if (this.next) {
+      this.next.then(next);
+    } else {
+      this.next = next;
+    }
     return this;
   }
 
-  private resolveTarget(target: CaptureTarget, queue: Thing[] = []) {
+  private resolveTarget(target: CaptureTarget, queue: Thing[] = []): Thing {
     const initial = target.subject.resolve(queue);
     return target.adjustments.reduce((res, { attribute, additionalInfo }) => {
       if (additionalInfo) {
@@ -109,7 +121,7 @@ class Capture {
 
   resolve(queue: Thing[] = [], make: FoodJSMaker): Relation {
     const resolvedTargets = this.targets.map(target => this.resolveTarget(target, queue));
-    const resolvedApplication = this.application.attribute ? this.application.relation.withAttribute(this.application.attribute) : this.application.relation;
+    const resolvedApplication = this.application.attributes.reduce((rel, attr) => rel.withAttribute(attr), this.application.relation);
     const resolvedResult = this.result instanceof Thing ? this.result : this.result.resolve();
     const resolvedRelation = resolvedApplication.withInput(make.group(...resolvedTargets)).withOutput(resolvedResult);
     if (this.next) {
