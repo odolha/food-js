@@ -12,6 +12,8 @@ class Subject<T extends Concept> {
   private target: Thing;
   private enhancements: { attribute: Attribute, additionalInfo: ItemDefinitionInfo<any> }[] = [];
 
+  public static none = new Subject(Thing.nothing);
+
   constructor(target: Thing) {
     this.target = target;
   }
@@ -46,7 +48,7 @@ class Subject<T extends Concept> {
   }
 }
 
-type CaptureInfo<T extends Concept> = Qualifier<T> | Subject<T>;
+type CaptureInfo<T extends Concept> = Subject<T>;
 type CaptureTarget = { subject: Subject<Thing>, adjustments: { attribute: Attribute, additionalInfo: CaptureInfo<any> }[] };
 type CaptureApplication = { relation: Relation, attributes: Attribute[] };
 
@@ -69,7 +71,7 @@ class Capture {
     return this;
   }
 
-  adjust<T extends Concept>(attribute: Attribute, additionalInfo: CaptureInfo<T> = Qualifier.plain): this {
+  adjust<T extends Concept>(attribute: Attribute, additionalInfo: CaptureInfo<T> = Subject.none): this {
     this.lastTarget.adjustments.push({ attribute, additionalInfo });
     return this;
   }

@@ -59,7 +59,7 @@ const fryFish = () => foodjs
     // still a long way to go for proper DSL - because it should detect previous output and continue the adjustments... or performance
 
     const fryFish = taking(the(fish))
-      .adjust(putIn, pan)
+      .adjust(putIn, the(pan))
       .perform(fry)
       .for(10['minutes'])
       .toObtain(some(friedFish));
