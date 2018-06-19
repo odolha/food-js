@@ -30,7 +30,7 @@ abstract class Subject<T extends Concept> {
     return this.enhancements.reduce((res: Thing, { attribute, additionalInfo }) => {
       if (additionalInfo) {
         if (additionalInfo instanceof Qualifier) {
-          return res.withAttribute(attribute.withQualifier(additionalInfo));
+          return res.withAttribute(attribute.withQualifier(attribute.qualifier.isPlain() ? additionalInfo : attribute.qualifier));
         } else if (additionalInfo instanceof Subject) {
           return res.withAttribute(attribute.withQualifier(additionalInfo.resolve()));
         } else {
