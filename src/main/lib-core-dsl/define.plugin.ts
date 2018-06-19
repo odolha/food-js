@@ -8,30 +8,25 @@ const { plugin } = coreDslUnit.make;
 
 type ItemDefinitionInfo<T extends Concept> = Qualifier<T> | Subject<T> | Array<Qualifier<T>>;
 
-class Subject<T extends Concept> {
-  private target: Thing;
+abstract class Subject<T extends Concept> {
+  private target: T;
   private enhancements: { attribute: Attribute, additionalInfo: ItemDefinitionInfo<any> }[] = [];
 
-  public static none = new Subject(Thing.nothing);
-
-  constructor(target: Thing) {
+  constructor(target: T) {
     this.target = target;
   }
 
-  where<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): Subject<T> {
+  where<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
     this.enhancements.push({ attribute, additionalInfo });
     return this;
   }
 
-  with<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): Subject<T> {
-    return this.where(attribute, additionalInfo);
+  and<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
+    this.where(attribute, additionalInfo);
+    return this;
   }
 
-  being<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): Subject<T> {
-    return this.where(attribute, additionalInfo);
-  }
-
-  resolve(queue: Thing[] = []): Thing {
+  resolve(queue: Thing[] = []): T {
     return this.enhancements.reduce((res: Thing, { attribute, additionalInfo }) => {
       if (additionalInfo) {
         if (additionalInfo instanceof Qualifier) {
@@ -48,50 +43,57 @@ class Subject<T extends Concept> {
   }
 }
 
-type CaptureInfo<T extends Concept> = Subject<T>;
-type CaptureTarget = { subject: Subject<Thing>, adjustments: { attribute: Attribute, additionalInfo: CaptureInfo<any> }[] };
-type CaptureApplication = { relation: Relation, attributes: Attribute[] };
+class ThingSubject extends Subject<Thing> {
+  with<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
+    return this.where(attribute, additionalInfo);
+  }
 
+  being<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
+    return this.where(attribute, additionalInfo);
+  }
+}
+
+class ContextThingSubject extends ThingSubject {
+  resolve(queue: Thing[] = []): Thing {
+    // XXX: implement context/queue-aware resolution
+    return super.resolve(queue);
+  }
+}
+
+class RelationSubject extends Subject<Relation> {
+  public static none = new RelationSubject(Relation.nothing);
+
+  how<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
+    return this.where(attribute, additionalInfo);
+  }
+
+  for<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
+    return this.where(attribute, additionalInfo);
+  }
+}
+
+// TODO: split in 3 steps to force correct definition
 class Capture {
-  private targets: CaptureTarget[] = [];
-  private application: CaptureApplication;
-  private result: Subject<Thing> | Thing;
+  private target: ThingSubject;
+  private application: RelationSubject;
+  private result: ThingSubject | Thing;
   private next: Capture;
 
-  constructor(subject: Subject<Thing>) {
+  constructor(subject: ThingSubject) {
     this.taking(subject);
   }
 
-  private get lastTarget(): CaptureTarget {
-    return this.targets[this.targets.length - 1];
-  }
-
-  taking(subject: Subject<Thing>): this {
-    this.targets.push({ subject, adjustments: [] });
+  taking(subject: ThingSubject): this {
+    this.target = subject;
     return this;
   }
 
-  adjust<T extends Concept>(attribute: Attribute, additionalInfo: CaptureInfo<T> = Subject.none): this {
-    this.lastTarget.adjustments.push({ attribute, additionalInfo });
+  perform(subject: RelationSubject): this {
+    this.application = subject;
     return this;
   }
 
-  perform(relation: Relation): this {
-    this.application = { relation, attributes: [] };
-    return this;
-  }
-
-  for(attribute: Attribute): this {
-    this.application.attributes = [ ...this.application.attributes, attribute ];
-    return this;
-  }
-
-  by(qualifiers: Qualifier<any>[]): this {
-    this.application.attributes = [ ...this.application.attributes, ...(qualifiers.map(q => by.withQualifier(q))) ];
-    return this;
-  }
-
-  toObtain(result: Subject<Thing>): this {
+  toObtain(result: ThingSubject): this {
     this.result = result;
     return this;
   }
@@ -106,72 +108,71 @@ class Capture {
     return this;
   }
 
-  private resolveTarget(target: CaptureTarget, queue: Thing[] = []): Thing {
-    const initial = target.subject.resolve(queue);
-    return target.adjustments.reduce((res, { attribute, additionalInfo }) => {
-      if (additionalInfo) {
-        if (additionalInfo instanceof Qualifier) {
-          return res.withAttribute(attribute.withQualifier(additionalInfo));
-        } else {
-          return res.withAttribute(attribute.withQualifier(additionalInfo.resolve(queue)));
-        }
-      } else {
-        return res.withAttribute(attribute);
-      }
-    }, initial);
-  }
-
   resolve(queue: Thing[] = [], make: FoodJSMaker): Relation {
-    const resolvedTargets = this.targets.map(target => this.resolveTarget(target, queue));
-    const resolvedApplication = this.application.attributes.reduce((rel, attr) => rel.withAttribute(attr), this.application.relation);
-    const resolvedResult = this.result instanceof Thing ? this.result : this.result.resolve();
-    const resolvedRelation = resolvedApplication.withInput(make.group(...resolvedTargets)).withOutput(resolvedResult);
-    if (this.next) {
-      return this.next.resolve(queue, make).withMergedInput(resolvedRelation);
+    if (this.target && this.application && this.result) {
+      const resolvedTarget = this.target.resolve(queue);
+      const resolvedApplication = this.application.resolve(queue);
+      const resolvedResult = this.result instanceof Thing ? this.result : this.result.resolve();
+      const resolvedRelation = resolvedApplication.withInput(resolvedTarget).withOutput(resolvedResult);
+      if (this.next) {
+        return this.next.resolve([...queue, resolvedRelation], make).withMergedInput(resolvedRelation);
+      } else {
+        return resolvedRelation;
+      }
     } else {
-      return resolvedRelation;
+      throw new Error('Capture must always define target, application and result');
     }
   }
 
 }
 
 interface DefContextUtils {
-  requires(requirements: Subject<Thing>[]): void;
-  some<T extends Concept>(target: Thing): Subject<T>;
-  a<T extends Concept>(target: Thing): Subject<T>;
+  requires(requirements: ThingSubject[]): void;
   summary(capture: Capture): void;
-  taking(subject: Subject<Thing>): Capture;
-  the(thing: Thing): Subject<Thing>;
+  taking(subject: ContextThingSubject): Capture;
+  the(target: Thing): ContextThingSubject;
+  some(target: Thing): ThingSubject;
+  a(target: Thing): ThingSubject;
+  action(relation: Relation): RelationSubject;
+  all(...captures: Capture[]): Capture;
 }
 
-export class DefContext implements DefContextUtils{
-  private requirements: Subject<Thing>[] = [];
+export class DefContext implements DefContextUtils {
+  private requirements: ThingSubject[] = [];
   private summaryCapture: Capture;
 
   constructor(private make: FoodJSMaker) { }
 
-  requires(requirements: Subject<Thing>[]): void {
+  requires(requirements: ThingSubject[]): void {
     this.requirements = [ ...this.requirements, ...requirements ];
-  }
-
-  some<T extends Concept>(target: Thing): Subject<T> {
-    return new Subject<T>(target);
-  }
-
-  a<T extends Concept>(target: Thing): Subject<T> {
-    return this.some(target);
   }
 
   summary(capture: Capture): void {
     this.summaryCapture = capture;
   }
 
-  taking(subject: Subject<Thing>): Capture {
+  some(target: Thing): ThingSubject {
+    return new ThingSubject(target);
+  }
+
+  a(target: Thing): ThingSubject {
+    return this.some(target);
+  }
+
+  taking(subject: ContextThingSubject): Capture {
     return new Capture(subject);
   }
 
-  the(thing: Thing): Subject<Thing> {
-    return new Subject<Thing>(thing);
+  the(target: Thing): ContextThingSubject {
+    return this.some(target);
+  }
+
+  action(relation: Relation): RelationSubject {
+    return new RelationSubject(relation);
+  }
+
+  all(...captures: Capture[]) {
+    return captures.reduce((res, cap) => res ? res.then(cap) : cap);
   }
 
   resolveRequirements(): Thing[] {
@@ -205,7 +206,9 @@ function makeContextUtils(context: DefContext): DefContextUtils {
     a: context.a.bind(context),
     summary: context.summary.bind(context),
     taking: context.taking.bind(context),
-    the: context.the.bind(context)
+    the: context.the.bind(context),
+    action: context.action.bind(context),
+    all: context.all.bind(context)
   };
 }
 

@@ -1,12 +1,15 @@
 import { $relation } from "./symbols";
 import { Thing } from "./thing";
 import { Group } from "@food-js/core";
+import { $nothing } from "@food-js/core/symbols";
 
 export class Relation extends Thing {
   public readonly conceptType = $relation;
 
   public input: Thing = Thing.nothing;
   public output: Thing = Thing.nothing;
+
+  static nothing = new Relation($nothing);
 
   clone(): this {
     return new Relation(this.code) as this;

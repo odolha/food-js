@@ -15,14 +15,13 @@ export const timeOf = attribute('timeOf');
 export const typeOf = attribute('typeOf');
 
 export const by = attribute('by');
-export const inside = attribute('inside');
-export const putOn = attribute('putOn');
-export const putIn = attribute('putIn');
 export const having = attribute('having');
 export const being = attribute('being');
+export const inside = attribute('inside');
+export const on = attribute('on');
 
-export const $heavy = Symbol('heavy');
-export const heavy = value($heavy);
+export const heavy = value(Symbol('heavy'));
+export const light = value(Symbol('light'));
 
 export const grams = attribute('grams');
 export const kgs = attribute('kgs');
@@ -32,4 +31,5 @@ export const seconds = attribute('seconds');
 export const minutes = attribute('minutes');
 export const hours = attribute('hours');
 
+export const put = production('put');
 export const wait = production('wait');
