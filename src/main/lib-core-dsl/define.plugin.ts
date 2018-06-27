@@ -1,7 +1,7 @@
 import { FoodJs, foodjs, FoodJSMaker } from "@food-js/core/foodjs";
 import { Attribute, Qualifier, Relation, Thing } from "@food-js/core";
 import { Concept } from "@food-js/core/concept";
-import { by, summarized, tagged } from "@food-js/lib-commons/core.concepts";
+import { summarized, tagged } from "@food-js/lib-commons/core.concepts";
 
 export const coreDslUnit = foodjs.unit('@lib-food-js/lib-core-dsl');
 const { plugin } = coreDslUnit.make;
@@ -61,8 +61,6 @@ class ContextThingSubject extends ThingSubject {
 }
 
 class RelationSubject extends Subject<Relation> {
-  public static none = new RelationSubject(Relation.nothing);
-
   how<T extends Concept>(attribute: Attribute, additionalInfo: ItemDefinitionInfo<T> = Qualifier.plain): this {
     return this.where(attribute, additionalInfo);
   }

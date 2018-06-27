@@ -1,9 +1,9 @@
 import '../test-util';
+import { foodjs } from "@food-js/core/foodjs";
 import { simpleToString } from "@food-js/lib-commons/simple-to-string.plugin";
 import { numberUnitOfMeasurements } from "@food-js/lib-core-dsl/number-enhancements.plugin";
 import { define } from "@food-js/lib-core-dsl/define.plugin";
 import { fish, friedFish, fry } from "@food-js/lib-food/common.concepts";
-import { foodjs } from "@food-js/core/foodjs";
 import * as assert from "assert";
 
 describe('Plugin: define', () => {
@@ -23,8 +23,8 @@ describe('Plugin: define', () => {
     const recipe = foodjs
       .unit('tests')
       .define('recipe')
-      .as(({ taking, some }) => {
-        return taking(some(fish)).perform(fry).toObtain(some(friedFish));
+      .as(({ taking, some, action }) => {
+        return taking(some(fish)).perform(action(fry)).toObtain(some(friedFish));
       })
       .build();
 
