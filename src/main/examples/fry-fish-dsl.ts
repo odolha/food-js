@@ -1,7 +1,7 @@
 import { foodjs } from "@food-js/core/foodjs";
 import {
   filleted,
-  fish,
+  fish, fried,
   friedFish,
   fry,
   heat,
@@ -14,9 +14,9 @@ import {
 } from "@food-js/lib-food/common.concepts";
 import { base, by, having, heavy, inside, on, put, weightOf } from "@food-js/lib-commons/core.concepts";
 import { simpleToString } from "@food-js/lib-commons/simple-to-string.plugin";
-import { numberUnitOfMeasurements } from "@food-js/lib-core-dsl/number-enhancements.plugin";
-import { define } from "@food-js/lib-core-dsl/define.plugin";
 import { ProductionExample } from "@food-js/examples/example";
+import { numberUnitOfMeasurements } from "@food-js/lib-core-dsl/number-enhancements/number-enhancements.plugin";
+import { define } from "@food-js/lib-core-dsl/define/define.plugin";
 
 
 const productionSetUp = () => {
@@ -30,18 +30,23 @@ const productionTearDown = () => {
   define.unload();
 };
 
-// using the lib-core-dsl to compose a similar complex structure easier than the canonical representation
+// using the lib-core-dsl to compose a similar complex structure easier than the basic representation
 const fryFish = () => foodjs
   .unit('fry-fish-example')
   .define('fryFish')
   .as(({ requires, a, some, summary, taking, the, action, all }) => {
     // prerequisites
-    requires([ a(pan).where(having, a(base).with(weightOf, heavy)) ]);
-    requires([ some(fish).being(filleted), some(oil), some(salt), some(pepper) ]);
+    requires(a(stove));
+    requires(a(pan).where(having, a(base).with(weightOf, heavy)));
+    requires(
+      some(fish).being(filleted),
+      some(oil), some(salt), some(pepper)
+    );
 
     // recipe summary
-    summary(taking(the(fish)).perform(action(fry)).toObtain(the(friedFish)));
+    summary(taking(the(fish)).perform(action(fry)).toObtain(some(friedFish)));
 
+    // recipe steps
     const prepPan = all(
       taking(the(pan))
         .perform(action(put).how(on, the(stove)))
@@ -63,13 +68,14 @@ const fryFish = () => foodjs
     const fryFish = all(
       taking(the(fish))
         .perform(action(put).how(inside, the(pan)))
-        .toObtain(some(friedFish)),
+        .toObtain(the(fish).being(inside, the(pan))),
 
       taking(the(fish))
         .perform(action(fry).for(10['minutes']))
-        .toObtain(some(friedFish))
+        .toObtain(the(fish).being(fried))
     );
 
+    // recipe build
     return prepPan.then(seasonFish).then(fryFish);
   })
   .build();

@@ -1,4 +1,4 @@
-// very basic decomposition to show complexity in canonical description
+// very basic decomposition to show complexity in basic description
 import { foodjs } from "@food-js/core/foodjs";
 import { fish, friedFish, fry, oil, oily, pan, pepper, salt, seasoned } from "@food-js/lib-food/common.concepts";
 import { inside, summarized, tagged } from "@food-js/lib-commons/core.concepts";

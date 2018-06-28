@@ -29,14 +29,14 @@ export class Plugin {
     this.def.globalExtensions.forEach(ext => {
       if (ext['method']) {
         const extMethod = ext as GlobalExtensionMethod;
-        logger.debug(`Applying global extension for method: ${ext.type}.${extMethod.method}`);
+        logger.debug(`Applying global extension for method: ${ext.type.name}.${extMethod.method}`);
         extMethod['_original'] = extMethod.type.prototype[extMethod.method];
         extMethod.type.prototype[extMethod.method] = function(...args) {
           return extMethod.implementation(this, ...args);
         };
       } else if (ext['attribute']) {
         const extAttr = ext as GlobalExtensionAttribute;
-        logger.debug(`Applying global extension for attribute: ${extAttr.type}.${extAttr.attribute}`);
+        logger.debug(`Applying global extension for attribute: ${extAttr.type.name}.${extAttr.attribute}`);
         extAttr['_original'] = extAttr.type.prototype[extAttr.attribute];
         if (extAttr.value !== undefined) {
           extAttr.type.prototype[extAttr.attribute] = extAttr.value;
@@ -63,11 +63,11 @@ export class Plugin {
     this.def.globalExtensions.forEach(ext => {
       if (ext['method']) {
         const extMethod = ext as GlobalExtensionMethod;
-        logger.debug(`Reverting global extension for method: ${extMethod.type}.${extMethod.method}`);
+        logger.debug(`Reverting global extension for method: ${extMethod.type.name}.${extMethod.method}`);
         extMethod.type.prototype[extMethod.method] = extMethod['_original'];
       } else if (ext['attribute']) {
         const extAttr = ext as GlobalExtensionAttribute;
-        logger.debug(`Reverting global extension for attribute: ${extAttr.type}.${extAttr.attribute}`);
+        logger.debug(`Reverting global extension for attribute: ${extAttr.type.name}.${extAttr.attribute}`);
         extAttr.type.prototype[extAttr.attribute] = extAttr['_original'];
       } else {
         throw new Error(`Cannot unload extension. Unsupported type, expecting either 'method' or 'attribute'.`);

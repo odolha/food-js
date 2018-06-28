@@ -14,7 +14,7 @@ Next steps
 - step-splitter on a Relation/productions utils/plugin
   - extracts smaller relations in a natural order
   - by following the tree deep-first to find leaf relations
-- try a larger / real recipe example to see if the API works 
+- try a larger / real recipe example to see if the API works
 - simple UI to load and show a recipe's
   - ingredients
   - tools
@@ -38,7 +38,7 @@ Refactoring
 Long-term backlog
 -----------------
 - I18N plugin
-- Serialization & de-serialization of concepts (also consider flexible set-ups with different libs available)
+- Canonical format: Serialization & de-serialization of concepts (also consider flexible set-ups with different libs available)
 - Hierarchical units, versioned units and experiment with the idea of publishing units (e.g. use NPM)
 - Image library for concepts and qualified concepts
 - Plugin conflicts and warnings
@@ -51,4 +51,4 @@ LIST OF THINGS DONE (for motivational purposes)
 - Core domain
 - Common lib, some basic plugins, utils
 - Core DSL / initial definition
-- Examples for canonical and core-dsl definitions
+- Examples for basic and core-dsl definitions

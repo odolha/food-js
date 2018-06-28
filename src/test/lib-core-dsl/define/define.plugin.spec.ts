@@ -1,10 +1,10 @@
-import '../test-util';
+import '../../test-util';
 import { foodjs } from "@food-js/core/foodjs";
 import { simpleToString } from "@food-js/lib-commons/simple-to-string.plugin";
-import { numberUnitOfMeasurements } from "@food-js/lib-core-dsl/number-enhancements.plugin";
-import { define } from "@food-js/lib-core-dsl/define.plugin";
 import { fish, friedFish, fry } from "@food-js/lib-food/common.concepts";
 import * as assert from "assert";
+import { numberUnitOfMeasurements } from "@food-js/lib-core-dsl/number-enhancements/number-enhancements.plugin";
+import { define } from "@food-js/lib-core-dsl/define/define.plugin";
 
 describe('Plugin: define', () => {
   beforeEach(() => {
@@ -20,15 +20,12 @@ describe('Plugin: define', () => {
   });
 
   it('allows simple taking-perform-toObtain syntax', () => {
-    const recipe = foodjs
-      .unit('tests')
-      .define('recipe')
-      .as(({ taking, some, action }) => {
-        return taking(some(fish)).perform(action(fry)).toObtain(some(friedFish));
+    const recipe = foodjs.unit('tests').define('recipe')
+      .as(({ taking, the, some, action }) => {
+        return taking(the(fish)).perform(action(fry)).toObtain(some(friedFish));
       })
       .build();
 
     assert.equal(recipe.toString(), 'fish *fry[@tagged:=recipe]* fish[@fried]');
   });
-
 });
