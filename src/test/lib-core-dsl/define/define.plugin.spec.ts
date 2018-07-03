@@ -19,9 +19,10 @@ describe('Plugin: define', () => {
     define.unload();
   });
 
-  it('allows simple taking-perform-toObtain syntax', () => {
+  it('allows simple requires-taking-perform-toObtain syntax', () => {
     const recipe = foodjs.unit('tests').define('recipe')
-      .as(({ taking, the, some, action }) => {
+      .as(({ requires, taking, the, some, action }) => {
+        requires(some(fish));
         return taking(the(fish)).perform(action(fry)).toObtain(some(friedFish));
       })
       .build();

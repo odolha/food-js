@@ -27,4 +27,5 @@ export class Relation extends Thing {
   withOutput(output: Thing): this {
     return this.derivated({ output });
   }
+
 }

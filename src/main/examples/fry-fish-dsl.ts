@@ -44,35 +44,35 @@ const fryFish = () => foodjs
     );
 
     // recipe summary
-    summary(taking(the(fish)).perform(action(fry)).toObtain(some(friedFish)));
+    summary(taking(the(fish)).perform(action(fry)).toObtain(friedFish));
 
     // recipe steps
     const prepPan = all(
       taking(the(pan))
         .perform(action(put).how(on, the(stove)))
-        .toObtain(the(pan).being(on, the(stove))),
+        .toObtain(the(pan).nowBeing(on, the(stove))),
 
       taking(the(oil))
         .perform(action(put).how(inside, the(pan)))
-        .toObtain(the(oil).being(inside, the(pan))),
+        .toObtain(the(oil).nowBeing(inside, the(pan))),
 
       taking(the(pan))
         .perform(action(heat).for(5['minutes']))
-        .toObtain(the(pan).being(heated).and(oily))
+        .toObtain(the(pan).nowBeing(heated).and(oily))
     );
 
     const seasonFish = taking(the(fish))
       .perform(action(season).how(by, [salt, pepper]))
-      .toObtain(the(fish).being(seasoned, [salt, pepper]));
+      .toObtain(the(fish).nowBeing(seasoned, [salt, pepper]));
 
     const fryFish = all(
       taking(the(fish))
         .perform(action(put).how(inside, the(pan)))
-        .toObtain(the(fish).being(inside, the(pan))),
+        .toObtain(the(fish).nowBeing(inside, the(pan))),
 
       taking(the(fish))
         .perform(action(fry).for(10['minutes']))
-        .toObtain(the(fish).being(fried))
+        .toObtain(the(fish).nowBeing(fried))
     );
 
     // recipe build

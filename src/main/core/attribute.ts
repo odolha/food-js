@@ -13,4 +13,5 @@ export class Attribute extends Qualifier<Attribute> {
   withQualifier(qualifier: Qualifier<Concept>): this {
     return this.derivated({ qualifier });
   }
+
 }

@@ -15,4 +15,5 @@ export class Value<T extends Concept> extends Qualifier<T> {
   withValue(value: AcceptedValueType) {
     return this.derivated({ value });
   }
+
 }

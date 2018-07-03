@@ -1,6 +1,7 @@
 import { Collectible } from "./collectible";
 import { $group } from "./symbols";
 import { Thing } from "./thing";
+import { Relation } from "@food-js/core/relation";
 
 export class Group<T extends Thing> extends Thing implements Collectible<T> {
   public readonly conceptType = $group;
@@ -20,4 +21,5 @@ export class Group<T extends Thing> extends Thing implements Collectible<T> {
   union(other: Group<T>): this {
     return this.withItems(...this.items, ...other.items);
   }
+
 }

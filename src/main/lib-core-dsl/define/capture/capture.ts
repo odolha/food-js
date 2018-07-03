@@ -4,11 +4,13 @@ import { FoodJSMaker } from "@food-js/core/foodjs";
 import { Something } from "@food-js/lib-core-dsl/define/subject/something";
 import { Doing } from "@food-js/lib-core-dsl/define/subject/doing";
 import { Queue } from "@food-js/lib-core-dsl/define/capture/queue";
+import { NewSomething } from "@food-js/lib-core-dsl/define/subject/new-something";
+import { AdjustedSomething } from "@food-js/lib-core-dsl/define/subject/adjusted-something";
 
 export class Capture {
   private target: Something;
   private application: Doing;
-  private result: Something | Thing;
+  private result: AdjustedSomething | NewSomething | Thing;
   private next: Capture;
 
   constructor(subject: Something) {
@@ -25,7 +27,7 @@ export class Capture {
     return this;
   }
 
-  toObtain(result: Something): this {
+  toObtain(result: AdjustedSomething | NewSomething | Thing): this {
     this.result = result;
     return this;
   }
@@ -44,8 +46,12 @@ export class Capture {
     if (this.target && this.application && this.result) {
       const resolvedTarget = this.target.resolve(queue);
       queue = queue.adding(resolvedTarget);
-      const resolvedApplication = this.application.resolve(queue, 'spawn') as Relation;
-      const resolvedResult = this.result instanceof Thing ? this.result : this.result.resolve(queue, 'spawn');
+      const resolvedApplication = this.application.resolve(queue) as Relation;
+      const resolvedResult = this.result instanceof Thing
+        ? this.result
+        : this.result instanceof NewSomething
+          ? this.result.resolve()
+          : this.result.resolve(queue);
       const resolvedRelation = resolvedApplication.withInput(resolvedTarget).withOutput(resolvedResult);
       if (this.next) {
         queue = queue.adding(resolvedRelation);

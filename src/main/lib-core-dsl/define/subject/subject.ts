@@ -42,6 +42,7 @@ export abstract class Subject<T extends Concept, Q extends Concept = T> {
     if (!found) {
       found = queue.find(item => item.code === this.target.code);
     }
+
     if (mustFind && !found) {
       throw new Error(`Cannot find target "${this.target.toString()}" in current queue: ${queue.toString()}`);
     }

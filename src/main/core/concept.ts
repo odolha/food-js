@@ -3,11 +3,13 @@ import { Attribute } from "./attribute";
 import { $anonymous, $concept } from "./symbols";
 
 export abstract class Concept implements Collectible<Concept> {
+  public readonly id;
   public attributes: Attribute[] = [];
   public synonyms: this[] = [];
   public types: this[] = [];
 
   constructor(public code: string | symbol = $anonymous) {
+    this.id = typeof code === 'string' ? Symbol(code) : code;
     this.attributes = [];
   }
 
@@ -34,4 +36,5 @@ export abstract class Concept implements Collectible<Concept> {
   isEmpty() {
     return this.list.length === 0;
   }
+
 }

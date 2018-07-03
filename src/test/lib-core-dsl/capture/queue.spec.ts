@@ -2,7 +2,7 @@ import '../../test-util';
 import * as assert from "assert";
 import { Queue } from "@food-js/lib-core-dsl/define/capture/queue";
 
-describe.only('Queue', () => {
+describe('Queue', () => {
   it('.empty().toString() should represent empty', () => {
     assert.equal(Queue.empty().toString(), '<<>>');
   });
