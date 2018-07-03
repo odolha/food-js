@@ -36,7 +36,7 @@ export abstract class Subject<T extends Concept, Q extends Concept = T> {
     }
   }
 
-  private find(queue: Queue<Q>, mustFind = false) {
+  private find(queue: Queue<Q>, mustFind = false): Q {
     // XXX: find in queue using a matcher structure
     let found = queue.findLast(item => item instanceof Relation && item.output.code === this.target.code);
     if (!found) {
@@ -47,6 +47,9 @@ export abstract class Subject<T extends Concept, Q extends Concept = T> {
       throw new Error(`Cannot find target "${this.target.toString()}" in current queue: ${queue.toString()}`);
     }
     if (found) {
+      if (found instanceof Relation) {
+        return found.output as any;
+      }
       logger.debug(`Found: ${found}`);
       return found;
     } else {
