@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>FoodJS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="/assets/favicon.ico">
+
+  <!-- Core libs -->
+  <script src="/node_modules/jquery/dist/jquery.slim.js"></script>
+  <script src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/node_modules/moment/min/moment.min.js"></script>
+
+  <!-- Vue std libs -->
+  <script src="/node_modules/vue/dist/vue.js"></script>
+  <script src="/node_modules/vue-router/dist/vue-router.min.js"></script>
+
+  <!-- Vue addons -->
+  <script src="/node_modules/vuejs-dialog/dist/vuejs-dialog.min.js"></script>
+  <script src="/node_modules/vuejs-dialog/dist/vuejs-dialog-mixin.min.js"></script>
+  <link rel="stylesheet" href="/node_modules/vuejs-dialog/dist/vuejs-dialog.min.css">
+  <script src="/node_modules/vue-awesome-notifications/dist/index.js"></script>
+  <link rel="stylesheet" href="/node_modules/vue-awesome-notifications/dist/styles/style.css">
+  <script src="/node_modules/buefy/lib/index.js"></script>
+  <link rel="stylesheet" href="/node_modules/buefy/lib/buefy.min.css">
+  <script src="/node_modules/vue-nav-tabs/dist/vue-tabs.min.js"></script>
+  <link rel="stylesheet" href="/node_modules/vue-nav-tabs/dist/vue-tabs.min.css">
+
+  <!-- Other libs -->
+  <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+
+  <!-- App files -->
+  <script type="module" src="/ui/utils/libs.js"></script>
+  <script type='module' src='/ui/index.js'></script>
+  <link rel="stylesheet" href="/ui/index.css">
+</head>
+<body>
+  <div id="app">
+    <router-view :key="$route.path"></router-view>
+  </div>
+</body>
+</html>

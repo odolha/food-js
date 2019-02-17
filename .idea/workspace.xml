@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="797cb646-81da-492b-90a8-70f00e22d679" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/be/index.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/server/be.container.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/server/be.context.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/server/be.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/server/be.routes.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/server/routes/ping.route.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/utils/ip-utils.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/utils/libs.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/utils/process-init.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/utils/route-utils.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/ws/ws-controller.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/be/ws/ws-server.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/container.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/async.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/consumer.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/enhance.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/json.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/mapper.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/predicate.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/reducer.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/simple-logger.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/stringify.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/utils/types.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/ws/ws-client.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/infrastructure.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/master.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/processes.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/secrets/secrets.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/app-access-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/app-process-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/infrastructure-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/load-secret.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/master-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/process-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/processes-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/server-process-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/support/ws-config-object.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app-init.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.components.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.container.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.context.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.directives.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.filters.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/app/app.routes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/components/nav/nav.component.ctrl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/components/nav/nav.component.tmpl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/live-server-start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/live-server.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/pages/home/home.page.ctrl.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/style/bootstrap.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/style/components.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/style/custom.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/style/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/style/theme.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/style/vue-dialog.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/utils/app-ws-client.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/utils/clipboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/utils/libs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/utils/notify.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/utils/with-confirmation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1783233767">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="TypeScriptServerServiceImpl" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="LICENSE" value="2" />
+          <entry key="css" value="1" />
+          <entry key="gitignore" value="2" />
+          <entry key="html" value="4" />
+          <entry key="js" value="31" />
+          <entry key="json" value="9" />
+          <entry key="md" value="2" />
+          <entry key="mjs" value="105" />
+          <entry key="scss" value="14" />
+          <entry key="ts" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSS" value="1" />
+          <entry key="ECMAScript 6" value="105" />
+          <entry key="Git file" value="2" />
+          <entry key="HTML" value="4" />
+          <entry key="JSON" value="9" />
+          <entry key="JSX Harmony" value="1" />
+          <entry key="JavaScript" value="30" />
+          <entry key="Markdown" value="2" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="SCSS" value="14" />
+          <entry key="TypeScript" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="gitignore" value="9" />
+          <entry key="html" value="6" />
+          <entry key="js" value="230" />
+          <entry key="json" value="47" />
+          <entry key="md" value="3" />
+          <entry key="mjs" value="210" />
+          <entry key="scss" value="49" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="ECMAScript 6" value="210" />
+          <entry key="Git file" value="9" />
+          <entry key="HTML" value="7" />
+          <entry key="JSON" value="47" />
+          <entry key="JSX Harmony" value="8" />
+          <entry key="JavaScript" value="221" />
+          <entry key="Markdown" value="3" />
+          <entry key="SCSS" value="49" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>console.lo</find>
+      <find>.input</find>
+      <find>kn</find>
+      <find>this.</find>
+      <find>selfSuperType</find>
+      <find>selfSuper</find>
+      <find>toSimpleString</find>
+      <find>(self)</find>
+      <find>this</find>
+      <find>isPLain</find>
+      <find>yarg</find>
+      <find>NetworkConfigObject</find>
+      <find>Entity</find>
+      <find>rxjs</find>
+      <find>lodas</find>
+      <find>rx</find>
+      <find>con</find>
+      <find>ws.send</find>
+      <find>rxjs.Subject</find>
+      <find>../domain/entity.mjs</find>
+      <find>processes.</find>
+      <find>_uid</find>
+      <find>beauf</find>
+      <find>TX</find>
+      <find>v-select</find>
+      <find>vue-sele</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>selfSuperType</replace>
+      <replace>self</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../BeastieRun" value="3003856272429" />
+        <entry key="$PROJECT_DIR$/../FoxRun" value="3003853378374" />
+        <entry key="$PROJECT_DIR$/../Playground/monster-run" value="3003864126266" />
+        <entry key="$PROJECT_DIR$/../Playground/read-assist" value="4416582102010" />
+        <entry key="$PROJECT_DIR$/../Playground/read-assist2" value="4416586736163" />
+        <entry key="$PROJECT_DIR$/../ReadAssist" value="4416610405988" />
+        <entry key="$PROJECT_DIR$/../ReadAssist/readassist" value="4426295006203" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/library/commons/index.ts" />
+        <option value="$PROJECT_DIR$/src/main/library/core-dsl/index.ts" />
+        <option value="$PROJECT_DIR$/src/main/examples/fry-fish-dsl.ts" />
+        <option value="$PROJECT_DIR$/src/main/examples/fry-fish-canonical.ts" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/ui/live-server-start.js" />
+        <option value="$PROJECT_DIR$/common/container.mjs" />
+        <option value="$PROJECT_DIR$/config/secrets/secrets.mjs" />
+        <option value="$PROJECT_DIR$/config/support/master-config-object.mjs" />
+        <option value="$PROJECT_DIR$/config/infrastructure.config.mjs" />
+        <option value="$PROJECT_DIR$/config/master.config.mjs" />
+        <option value="$PROJECT_DIR$/common/utils/ip-utils.mjs" />
+        <option value="$PROJECT_DIR$/config/support/infrastructure-config-object.mjs" />
+        <option value="$PROJECT_DIR$/config/support/server-process-config-object.mjs" />
+        <option value="$PROJECT_DIR$/config/support/ws-config-object.mjs" />
+        <option value="$PROJECT_DIR$/be/server/be.mjs" />
+        <option value="$PROJECT_DIR$/be/server/be.container.mjs" />
+        <option value="$PROJECT_DIR$/be/utils/route-utils.mjs" />
+        <option value="$PROJECT_DIR$/common/utils/enhance.mjs" />
+        <option value="$PROJECT_DIR$/be/ws/ws-server.mjs" />
+        <option value="$PROJECT_DIR$/be/ws/ws-controller.mjs" />
+        <option value="$PROJECT_DIR$/ui/utils/ws/app-ws-client.js" />
+        <option value="$PROJECT_DIR$/be/utils/libs.mjs" />
+        <option value="$PROJECT_DIR$/be/server/be.routes.mjs" />
+        <option value="$PROJECT_DIR$/common/ws/ws-client.mjs" />
+        <option value="$PROJECT_DIR$/ui/live-server.mjs" />
+        <option value="$PROJECT_DIR$/common/utils/stringify.mjs" />
+        <option value="$PROJECT_DIR$/be/server/be.context.mjs" />
+        <option value="$PROJECT_DIR$/ui/style/components.scss" />
+        <option value="$PROJECT_DIR$/ui/style/custom.scss" />
+        <option value="$PROJECT_DIR$/ui/style/theme.scss" />
+        <option value="$PROJECT_DIR$/config/processes.config.mjs" />
+        <option value="$PROJECT_DIR$/ui/utils/libs.js" />
+        <option value="$PROJECT_DIR$/ui/utils/app-ws-client.js" />
+        <option value="$PROJECT_DIR$/ui/app/app.js" />
+        <option value="$PROJECT_DIR$/ui/app/app.directives.js" />
+        <option value="$PROJECT_DIR$/ui/app/app.filters.js" />
+        <option value="$PROJECT_DIR$/ui/app/app.container.js" />
+        <option value="$PROJECT_DIR$/be/index.mjs" />
+        <option value="$PROJECT_DIR$/ui/pages/home/home.page.ctrl.js" />
+        <option value="$PROJECT_DIR$/ui/components/nav/nav.component.tmpl.js" />
+        <option value="$PROJECT_DIR$/ui/components/nav/nav.component.ctrl.js" />
+        <option value="$PROJECT_DIR$/ui/app/app.components.js" />
+        <option value="$PROJECT_DIR$/ui/index.html" />
+        <option value="$PROJECT_DIR$/be/utils/process-init.mjs" />
+        <option value="$PROJECT_DIR$/ui/app/app-init.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/ui/style/index.scss" />
+        <option value="$PROJECT_DIR$/ui/app/app.routes.js" />
+        <option value="$PROJECT_DIR$/ui/app/app.context.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="food-js" type="b2602c69:ProjectViewProjectNode" />
+              <item name="food-js" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="app.con&#9;FILE&#9;file://D:/Workspace/food-js/ui/app/app.context.js&#10;app.rou&#9;FILE&#9;file://D:/Workspace/food-js/ui/app/app.routes.js&#10;app.compo&#9;FILE&#9;file://D:/Workspace/food-js/ui/app/app.components.js&#10;pac&#9;FILE&#9;file://D:/Workspace/food-js/package.json&#10;maste&#9;FILE&#9;file://D:/Workspace/food-js/config/master.config.mjs&#10;proces&#9;FILE&#9;file://D:/Workspace/food-js/be/utils/process-init.mjs&#10;libs.m&#9;FILE&#9;file://D:/Workspace/food-js/be/utils/libs.mjs&#10;packa&#9;FILE&#9;file://D:/Workspace/food-js/package.json&#10;Conc&#9;FILE&#9;file://D:/Workspace/food-js/src/main/core/concept.ts&#10;$thing&#9;null&#9;null&#10;plug&#9;FILE&#9;file://D:/Workspace/food-js/src/main/core/plugin.ts" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550413206422" />
+    <property name="javascript.nodejs.core.library.configured.version" value="9.1.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.16640624" />
+    <property name="project.structure.side.proportion" value="0.29765257" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
+    <property name="ts.external.directory.path" value="D:\Workspace\food-js\node_modules\typescript\lib" />
+    <property name="typescript-compiler-editor-notification" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Workspace\food-js\ui\components" />
+      <recent name="D:\Workspace\food-js\ui" />
+      <recent name="D:\Workspace\food-js\common\ws" />
+      <recent name="D:\Workspace\food-js\be\utils" />
+      <recent name="D:\Workspace\food-js\be" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Workspace\food-js\ui\utils" />
+      <recent name="D:\Workspace\food-js\be\utils" />
+      <recent name="D:\Workspace\food-js\common\utils" />
+      <recent name="D:\Workspace\food-js\src\main\examples" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SbtLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../Coursera/FunctionalProgrammingScala/01_example_submit-test" value="1467364852577" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun/week1/recfun" value="1467455171240" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun/week2/funsets" value="1467914804355" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun/week3/objsets" value="1468066334805" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun/week4/patmat" value="1470492766998" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun/week6/forcomp" value="1475836785588" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun2/week2/streams" value="1478246569547" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun2/week3/quickcheck" value="1480070579338" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun2/week4/calculator" value="1481291514543" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun3/week1/example" value="1484907651150" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun3/week1/scalashop" value="1484913415961" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun3/week2/reductions" value="1485158251440" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun4/stackoverflow" value="1492250688533" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun4/timeusage" value="1493142093197" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun4/wikipedia" value="1489583814004" />
+        <entry key="$PROJECT_DIR$/../Coursera/scala-specialization/progfun5/observatory" value="1494139692445" />
+        <entry key="$PROJECT_DIR$/../ReadAssist/readassist" value="1483344003448" />
+      </map>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="797cb646-81da-492b-90a8-70f00e22d679" name="Default" comment="" />
+      <created>1526725255960</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1526725255960</updated>
+      <workItem from="1526725257319" duration="20662000" />
+      <workItem from="1550341062544" duration="10016000" />
+    </task>
+    <task id="LOCAL-00001" summary="finished basic cannonical rep">
+      <created>1526755888087</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1526755888087</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="30678000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21160042" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="SBT Console" order="7" />
+      <window_info anchor="bottom" id="TypeScript" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.0" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32960895" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24973147" />
+      <window_info anchor="right" id="PlantUML" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="finished basic cannonical rep" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished basic cannonical rep" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/be/server/be.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/libs/rxjs@6.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="9" column="54" lean-forward="true" selection-start-line="9" selection-start-column="54" selection-end-line="9" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/utils/libs.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/server/routes/ping.route.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/utils/route-utils.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/server/be.routes.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="7" column="2" lean-forward="true" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/ws/ws-client.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="144" column="3" lean-forward="true" selection-start-line="144" selection-start-column="3" selection-end-line="144" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/live-server-start.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/live-server.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1567">
+          <caret line="60" column="53" lean-forward="true" selection-start-line="60" selection-start-column="53" selection-end-line="60" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/utils/stringify.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/server/be.container.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/bootstrap.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="671">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/components.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/custom.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/icons.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/pages.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/server/be.context.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/variables.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/theme.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/infrastructure.config.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/master.config.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="12" column="33" lean-forward="true" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/processes.config.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="16" column="6" lean-forward="true" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/libs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/logger/app-logger.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/clipboard.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/with-confirmation.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/notify.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/utils/app-ws-client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.post-init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="28" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="503">
+          <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.filters.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.directives.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="1" lean-forward="true" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.container.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/index.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/components/nav/nav.component.tmpl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="n#style#0;n#nav#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/pages/home/home.page.ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/components/nav/nav.component.ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.components.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/be/utils/process-init.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/vue-dialog.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/vue-select.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="3" column="2" lean-forward="true" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app-init.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="6237" selection-start-line="6237" selection-end-line="6237" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="5745" column="5" selection-start-line="5745" selection-start-column="5" selection-end-line="5745" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/style/index.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/app/app.context.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor>
+            <caret column="9" lean-forward="true" selection-start-column="9" selection-end-column="9" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.29765257" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.29765257" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>scala-sdk-2.11.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.29765257" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>food-js</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.29765257" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

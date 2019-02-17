@@ -1,0 +1,21 @@
+import WebSocket from "ws";
+import axios from "axios";
+import moment from 'moment';
+import rxjs from "rxjs";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/take";
+import "rxjs/add/operator/skip";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/pairwise";
+import "rxjs/add/operator/toArray";
+import "rxjs/add/operator/merge";
+import "rxjs/add/observable/interval";
+import "rxjs/add/observable/merge";
+import "rxjs/add/observable/empty";
+import "rxjs/add/observable/of";
+
+global.WebSocket = WebSocket;
+global.rxjs = rxjs;
+global.axios = axios;
+global.moment = moment;
